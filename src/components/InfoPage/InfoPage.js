@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateEvent from '../CreateEvent/CreateEvent';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -6,11 +7,16 @@ import React from 'react';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 const InfoPage = () => (
+  <>
   <div>
     <p>
       Info Page
     </p>
   </div>
+  <div>
+    <CreateEvent />
+  </div>
+  </>
 );
 
 export default InfoPage;
