@@ -8,6 +8,8 @@ const sessionMiddleware = require('./modules/session-middleware');
 
 const passport = require('./strategies/user.strategy');
 
+const cors = require('cors');
+
 // Route includes
 const userRouter = require('./routes/user.router');
 
@@ -35,3 +37,10 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+
+app.use(cors());
+
+const sign_s3 = require('./controllers/sign_s3');
+
+app.use('/sign_s3', sign_s3.sign_s3);
