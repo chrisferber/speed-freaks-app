@@ -1,10 +1,10 @@
-var aws = require('aws-sdk');
+const aws = require('aws-sdk');
 require('dotenv').config(); // Configure dotenv to load in the .env file
 // Configure aws with your accessKeyId and your secretAccessKey
 console.log('Calling aws.config.update');
-console.log("Access Key=" + process.env.AWSAccessKeyId);
-console.log("Secret Key=" + process.env.AWSSecretKey);
-console.log("Bucket=" + process.env.Bucket);
+console.log("Access Key=", process.env.AWSAccessKeyId);
+console.log("Secret Key=", process.env.AWSSecretKey);
+console.log("Bucket=", process.env.Bucket);
 aws.config.update({
   region: 'us-east-2', // Put your aws region here
   accessKeyId: process.env.AWSAccessKeyId,
@@ -12,8 +12,8 @@ aws.config.update({
 })
 
 const S3_BUCKET = process.env.Bucket;
-console.log("S3_BUCKET=" + S3_BUCKET);
-// Now lets export this function so we can call it from somewhere else
+console.log("S3_BUCKET=", S3_BUCKET);
+// Export this function so we can call it from somewhere else
 console.log('About to make exports.sign_s3 call');
 exports.sign_s3 = (req,res) => {
   const s3 = new aws.S3();  // Create a new instance of S3
