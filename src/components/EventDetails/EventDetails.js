@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
  
 class EventDetails extends Component {
 
+    registerForEvent = () => {
+      this.props.dispatch({ type:'EVENT_REGISTER', payload: this.props.reduxState.currentEvent })
+    }
+
     render() {
     return (
       <div className="EventDetails">
@@ -14,6 +18,7 @@ class EventDetails extends Component {
         <p>{this.props.reduxState.currentEvent.event_date_end}</p>
         <p>{this.props.reduxState.currentEvent.details_description}</p>
         <p>{this.props.reduxState.currentEvent.admin_contact}</p>
+        <button onClick={this.registerForEvent}>Register</button>
       </div>
     );
   }

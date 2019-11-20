@@ -13,4 +13,25 @@ router.get('/', (req, res) => {
         })
 });
 
+router.post('/register', (req, res) => {
+    const queryText = `INSERT INTO "user_event" ("user_id", "event_id")
+    VALUES ($1, $2)`;
+    console.log('router.post for register for event, user id is:', req.user);
+    console.log('router.post for register for event, req.body is:', req.body);
+    const queryValues = [
+        req.user.id,
+        req.body.id,
+    ];
+    pool.query(queryText, queryValues)
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('error in router.post in events.router.js, ', error);
+            res.sendStatus(500);
+        });
+
+
+});
+
 module.exports = router;
