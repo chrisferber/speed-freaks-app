@@ -1,18 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import UpcomingEventsList from '../UpcomingEventsList/UpcomingEventsList';
 
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
 
-const AboutPage = () => (
-  <div>
-    <div>
-      <p>
-        This about page is for anyone to read!
-      </p>
-    </div>
-  </div>
-);
+class UpcomingEvents extends Component {
 
-export default AboutPage;
+  componentDidMount() {
+    this.fetchEvents();
+  }
+
+  fetchEvents = () => {
+    this.props.dispatch({ type: 'FETCH_EVENTS' });
+  }
+
+  render() {
+    return (
+      <div className="upcoming-events">
+        <div className="upcoming-events-header">
+          <h2>Upcoming Events</h2>
+        </div>
+        <div className="upcoming-events-map-list">
+          {this.props.reduxState.events.map((event) => {
+            return (
+              <UpcomingEventsList key={event.id} event={event} />
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = reduxState => ({
+  reduxState,
+});
+
+export default connect(mapStateToProps)(UpcomingEvents);
