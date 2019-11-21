@@ -6,12 +6,15 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
-    const queryText = `SELECT "username", "email", "events" FROM "user";`;
+    const queryText = `SELECT * FROM "vehicle"
+    WHERE "user_id" = $1`;
 
-    pool.query(queryText)
+    const queryValues = [ req.user.id ];
+
+    pool.query(queryText, queryValues)
         .then((result) => { res.send(result.rows) })
         .catch((error) => {
-            console.log('error in user.profile.router.js in making GET request', error);
+            console.log('error in vehicle.router.js in making GET request', error);
             res.sendStatus(500);
         })
 });

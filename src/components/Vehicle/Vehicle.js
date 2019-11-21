@@ -4,19 +4,11 @@ import { connect } from 'react-redux';
 
 class Vehicle extends Component {
 
-    componentDidMount() {
-        this.fetchVehicle();
-    }
-
-    fetchVehicle = () => {
-        this.props.dispatch({ type: 'FETCH_VEHICLE' });
-    }
-
     render() {
         return (
             <div className="vehicle">
-                <h2>Username: {this.props.reduxState.user.username}</h2>
-                <p>Email: {this.props.reduxState.user.email}</p>
+                <h3>Active Vehicle:</h3>
+    <p>{this.props.vehicle.year} {this.props.vehicle.make} {this.props.vehicle.model}</p>
             </div>
         );
     }
