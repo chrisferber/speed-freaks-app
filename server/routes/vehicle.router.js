@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
     const queryValues = [ req.user.id ];
 
     pool.query(queryText, queryValues)
-        .then((result) => { res.send(result.rows) })
+        .then((result) => { 
+            res.send(result.rows) 
+        })
         .catch((error) => {
             console.log('error in vehicle.router.js in making GET request', error);
             res.sendStatus(500);
@@ -22,8 +24,26 @@ router.get('/', (req, res) => {
 /**
  * POST route template
  */
-// router.post('/', (req, res) => {
+router.post('/add', (req, res) => {
+    const queryText = `INSERT INTO "vehicle" ("make", "model", "year", "user_id")
+    VALUES ($1, $2, $3, $4)
+    RETURNING *`;
 
-// });
+    const queryValues = [
+        req.body.make,
+        req.body.model,
+        req.body.year,
+        req.user.id,
+    ]
+
+    pool.query(queryText, queryValues)
+    .then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        console.log('error in vehicle.router.js with new vehicle post, error:', error);
+        res.sendStatus(500);
+    })
+});
 
 module.exports = router;
