@@ -22,11 +22,12 @@ class Profile extends Component {
                 <p>Email: {this.props.reduxState.user.email}</p>
             </div>
             <div>
-            {this.props.reduxState.vehicleReducer.map((vehicle) => {
+              <Vehicle />
+          {/* {this.props.reduxState.vehicleReducer.map((vehicle) => {
             return (
               <Vehicle key={vehicle.id} vehicle={vehicle} />
             );
-          })}
+          })} */}
             </div>
             </>
         );
