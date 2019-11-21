@@ -34,15 +34,39 @@ router.post('/add', (req, res) => {
         req.body.model,
         req.body.year,
         req.user.id,
-    ]
+    ];
 
     pool.query(queryText, queryValues)
     .then((result) => {
         res.send(result.rows)
     })
     .catch((error) => {
-        console.log('error in vehicle.router.js with new vehicle post, error:', error);
+        console.log('error in vehicle.router.js with new vehicle post,', error);
         res.sendStatus(500);
+    })
+});
+
+router.put('/edit', (req, res) => {
+    const queryText = `UPDATE "vehicle"
+    SET "make" = $1,
+    "model" = $2,
+    "year" = $3
+    WHERE "user_id" = $4
+    RETURNING *`;
+
+    const queryValues = [
+        req.body.make,
+        req.body.model,
+        req.body.year,
+        req.user.id,
+    ];
+
+    pool.query(queryText, queryValues)
+    .then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        console.log('error in vehicle.router.js with update vehicle put,', error)
     })
 });
 

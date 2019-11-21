@@ -69,13 +69,14 @@ class Profile extends Component {
         console.log(this.state);
     }
 
-    postVehicle = (event) => {
+    postVehicle = () => {
         this.props.dispatch({ type:'POST_NEW_VEHICLE', payload: this.state.newVehicle, });
         this.handleAddButtonClick();
     }
 
     updateVehicle = () => {
-
+        this.props.dispatch({ type:'UPDATE_NEW_VEHICLE', payload: this.state.newVehicle, });
+        this.handleEditButtonClick();
     }
 
     render() {
@@ -113,9 +114,9 @@ class Profile extends Component {
                     {this.state.editVehicle &&
                         <div>
                             <h3>Vehicle to be used at events:</h3>
-                            <p>Make:</p><input placeholder={this.props.reduxState.vehicleReducer[0].make}></input>
-                            <p>Model:</p><input placeholder={this.props.reduxState.vehicleReducer[0].model}></input>
-                            <p>Year:</p><input placeholder={this.props.reduxState.vehicleReducer[0].year}></input>
+                            <p>Make:</p><input onChange={this.captureNewMake} placeholder={this.props.reduxState.vehicleReducer[0].make} value={this.state.newVehicle.make}></input>
+                            <p>Model:</p><input onChange={this.captureNewModel} placeholder={this.props.reduxState.vehicleReducer[0].model} value={this.state.newVehicle.model}></input>
+                            <p>Year:</p><input onChange={this.captureNewYear} placeholder={this.props.reduxState.vehicleReducer[0].year} value={this.state.newVehicle.year}></input>
                             <button onClick={this.updateVehicle}>Save Vehicle</button>
                         </div>
                     }
