@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import AdminProtectedRoute from '../AdminProtectedRoute/AdminProtectedRoute';
 
 import UpcomingEvents from '../UpcomingEvents/UpcomingEvents';
 import Tracks from '../Tracks/Tracks';
@@ -54,7 +55,7 @@ class App extends Component {
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
-            <ProtectedRoute
+            <AdminProtectedRoute
               exact
               path="/create-event"
               component={CreateEvent}
@@ -72,7 +73,7 @@ class App extends Component {
               component={Profile}
             />
 
-            <ProtectedRoute
+            <AdminProtectedRoute
               exact
               path="/my-events"
               component={MyEvents}
