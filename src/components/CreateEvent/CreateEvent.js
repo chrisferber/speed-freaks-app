@@ -16,6 +16,7 @@ class CreateEvent extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
+    this.props.dispatch({ type:'CREATE_EVENT', payload: this.state });
   }
 
   handleInputChangeFor = propertyName => (event) => {
