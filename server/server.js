@@ -14,6 +14,7 @@ const cors = require('cors');
 const userRouter = require('./routes/user.router');
 const eventsRouter = require('./routes/events.router');
 const vehicleRouter = require('./routes/vehicle.router');
+const organizerRouter = require('./routes/organizer.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/vehicle', vehicleRouter);
+app.use('/api/organizer', organizerRouter);
 
 // Serve static files
 app.use(express.static('build'));

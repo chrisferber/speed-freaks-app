@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 class MyEvents extends Component {
+
+    componentDidMount() {
+        this.fetchMyCreatedEvents();
+    }
+
+    fetchMyCreatedEvents = () => {
+        this.props.dispatch({ type: 'FETCH_MY_CREATED_EVENTS' });
+    }
 
     render() {
         return (
@@ -9,9 +17,14 @@ class MyEvents extends Component {
                 <h2>
                     My Events:
                 </h2>
+
             </div>
         );
     }
 }
 
-export default (MyEvents);
+const mapStateToProps = reduxState => ({
+    reduxState,
+});
+
+export default connect(mapStateToProps)(MyEvents);
