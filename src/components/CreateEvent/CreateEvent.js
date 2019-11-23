@@ -1,124 +1,130 @@
 import React, { Component } from 'react';
-import ReactS3Uploader from 'react-s3-uploader';
-import axios from 'axios';
- 
+import { connect } from 'react-redux';
+import ImageUpload from '../ImageUpload/ImageUpload';
+
 class CreateEvent extends Component {
- 
-//   handleFinishedUpload = info => {
-//     console.log('File uploaded with filename', info.filename)
-//     console.log('Access it on s3 at', info.fileUrl)
-//   }
- 
-//   render() {
-//     const uploadOptions = {
-//       server: 'http://localhost:5000',
-//       signingUrlQueryParams: {uploadType: 'avatar'},
-//     }
-//     const s3Url = 'https://prime-example.s3.amazonaws.com'
- 
-//     return (
-//       <ReactS3Uploader
-//         onFinish={this.handleFinishedUpload}
-//         s3Url={s3Url}
-//         maxSize={1024 * 1024 * 5}
-//         upload={uploadOptions}
-//       />
-//     )
-//   }
-// }
 
-
-constructor(props){
-    super(props);
-    this.state = {
-      success : false,
-      url : "",
-      error: false,
-      errorMessage : ""
-    }
+  state = {
+    eventTitle: '',
+    eventStartDate: '',
+    eventEndDate: '',
+    upcomingDescription: '',
+    detailsDescription: '',
+    organizerContact: '',
   }
 
-  handleChange = (ev) => {
-    this.setState({success: false, url : ""});
-
-  }
-  handleUpload = (ev) => {
-    let file = this.uploadInput.files[0];
-    // Split the filename to get the name and type
-
-    let fileParts = this.uploadInput.files[0].name.split('.');
-    let fileName = fileParts[0];
-    let fileType = fileParts[1];
-    console.log("Preparing the upload");
-    console.log("Filename=", fileName);
-    console.log("Filetype=", fileType);
-    axios.post('/sign_s3',{
-      fileName : fileName,
-      fileType : fileType
-    })
-    .then(response => {
-      const returnData = response.data.data.returnData;
-      const signedRequest = returnData.signedRequest;
-      const url = returnData.url;
-      this.setState({url: url})
-      console.log("Recieved a signed request ", signedRequest);
-
-      const options = {
-        headers: {
-          'Content-Type': fileType
-        }
-      };
-
-console.log("About to axios.put, signedRequest=", signedRequest);
-console.log("About to axios.put, file=", file);
-console.log("About to axios.put, options=", options);
-
-
-      axios.put(signedRequest,file,options)
-      .then(result => {
-        console.log("Response from s3")
-        this.setState({success: true});
-      })
-      .catch(error => {
-        console.log("Received error on axios.put, ", JSON.stringify(error));
-        alert("ERROR ", JSON.stringify(error));
-      })
-    })
-    .catch(error => {
-      alert(JSON.stringify(error));
-    })
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(this.state);
+    this.props.dispatch({ type:'CREATE_EVENT', payload: this.state });
+    this.setState({
+      eventTitle: '',
+    eventStartDate: '',
+    eventEndDate: '',
+    upcomingDescription: '',
+    detailsDescription: '',
+    organizerContact: '',
+    });
   }
 
+  handleInputChangeFor = propertyName => (event) => {
+    this.setState({
+      [propertyName]: event.target.value,
+    });
+  }
 
   render() {
-    const SuccessMessage = () => (
-      <div style={{padding:50}}>
-        <h3 style={{color: 'green'}}>SUCCESSFUL UPLOAD</h3>
-        <a href={this.state.url}>Access the file here</a>
-        <br/>
-      </div>
-    )
-    const ErrorMessage = () => (
-      <div style={{padding:50}}>
-        <h3 style={{color: 'red'}}>FAILED UPLOAD</h3>
-        <span style={{color: 'red', backgroundColor: 'black'}}>ERROR: </span>
-        <span>{this.state.errorMessage}</span>
-        <br/>
-      </div>
-    )
     return (
-      <div className="App">
-        <center>
-          <h1>UPLOAD A FILE</h1>
-          {this.state.success ? <SuccessMessage/> : null}
-          {this.state.error ? <ErrorMessage/> : null}
-          <input onChange={this.handleChange} ref={(ref) => { this.uploadInput = ref; }} type="file"/>
-          <br/>
-          <button onClick={this.handleUpload}>UPLOAD</button>
-        </center>
-      </div>
+      <>
+        <h1>Create an Event</h1>
+        <div>
+          <ImageUpload />
+        </div>
+        <div className="createEventForm">
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label htmlFor="eventTitle">
+                Event Title:
+              <input
+                  type="text"
+                  name="eventTitle"
+                  value={this.state.eventTitle}
+                  onChange={this.handleInputChangeFor('eventTitle')}
+                />
+              </label>
+            </div>
+            <div>
+            <label htmlFor="upcomingDescription">
+              Upcoming Events Description:
+              <input
+                type="text"
+                name="upcomingDescription"
+                value={this.state.upcomingDescription}
+                onChange={this.handleInputChangeFor('upcomingDescription')}
+              />
+            </label>
+            </div>
+            <div>
+            <label htmlFor="detailsDescription">
+              Event Details Description:
+              <input
+                type="text"
+                name="detailsDescription"
+                value={this.state.detailsDescription}
+                onChange={this.handleInputChangeFor('detailsDescription')}
+              />
+            </label>
+            </div>
+            <div>
+            <label htmlFor="organizerContact">
+              Organizer Contact Info:
+              <input
+                type="text"
+                name="organizerContact"
+                value={this.state.organizerContact}
+                onChange={this.handleInputChangeFor('organizerContact')}
+              />
+            </label>
+            </div>
+            <div>
+            <label htmlFor="eventStartDate">
+              Event Start Date:
+              <input
+                type="date"
+                name="eventStartDate"
+                value={this.state.eventStartDate}
+                onChange={this.handleInputChangeFor('eventStartDate')}
+              />
+            </label>
+            </div>
+            <div>
+            <label htmlFor="eventEndDate">
+              Event End Date:
+              <input
+                type="date"
+                name="eventEndDate"
+                value={this.state.eventEndDate}
+                onChange={this.handleInputChangeFor('eventEndDate')}
+              />
+            </label>
+            </div>
+            <div>
+            <input
+              className="create-event"
+              type="submit"
+              name="submit"
+              value="Create Event"
+            />
+          </div>
+          </form>
+        </div>
+      </>
     );
   }
 }
 
-export default (CreateEvent);
+const mapStateToProps = reduxState => ({
+  reduxState,
+});
+
+export default connect(mapStateToProps)(CreateEvent);

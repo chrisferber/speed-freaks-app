@@ -10,10 +10,19 @@ function* fetchEvents() {
     }
 }
 
+function* postEvent(action) {
+    try {
+        yield axios.post('/api/events/create', action.payload );
+        yield put({ type: 'FETCH_EVENTS', })
+    } catch (error) {
+        console.log('error in eventsSaga, postEvent request failed with:', error);
+    }
+}
 
 
 function* eventsSaga() {
     yield takeLatest('FETCH_EVENTS', fetchEvents);
+    yield takeLatest('CREATE_EVENT', postEvent);
 }
 
 export default eventsSaga;
