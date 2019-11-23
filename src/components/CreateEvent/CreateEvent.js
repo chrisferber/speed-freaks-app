@@ -17,6 +17,14 @@ class CreateEvent extends Component {
     event.preventDefault();
     console.log(this.state);
     this.props.dispatch({ type:'CREATE_EVENT', payload: this.state });
+    this.setState({
+      eventTitle: '',
+    eventStartDate: '',
+    eventEndDate: '',
+    upcomingDescription: '',
+    detailsDescription: '',
+    organizerContact: '',
+    });
   }
 
   handleInputChangeFor = propertyName => (event) => {
