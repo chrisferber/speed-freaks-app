@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import MyEventsListItem from '../MyEventsListItem/MyEventsListItem';
 
 class MyEvents extends Component {
 
@@ -12,12 +13,21 @@ class MyEvents extends Component {
     }
 
     render() {
+
+        // const event = this.props.reduxstate.organizerDataReducer;
+
         return (
             <div className="EventDetails">
-                <h2>
+                <h1>
                     My Events:
-                </h2>
+                </h1>
+                {this.props.reduxState.organizerDataReducer.map((event) => {
+                    return(
+                    <MyEventsListItem key={event.id} event={event} />
+                    );
+                })
 
+                }
             </div>
         );
     }
