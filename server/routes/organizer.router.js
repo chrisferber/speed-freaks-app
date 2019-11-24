@@ -19,5 +19,30 @@ router.get('/', (req, res) => {
         })
 });
 
+router.get('/attending/:id', (req, res) => {
+    const queryText = `SELECT "username", "email", "user_id", "event_id" FROM "user"
+    JOIN "user_event" ON "user_event"."user_id" = "user"."id"
+    WHERE "user_event"."event_id" = $1
+    ORDER BY "user"."id"`
+    ;
+    console.log('req.params.id for /attending get in organizer.router.js:', req.params.id);
+
+    pool.query(queryText, [req.params.id])
+        .then((result) => {
+            console.log('result.rows for /attending get in organizer.router.js:', result.rows);
+            res.send(result.rows);
+            // const queryText = `SELECT "username", "email" FROM "user"
+            // WHERE $1=$2`
+            // const queryValues = [ req.params.id, result.rows ]
+            // pool.query(queryText, queryValues);
+        // })
+        // .then((result) => {
+        //     res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in organizer.router.js in /attending GET request', error);
+        })
+});
+
 
 module.exports = router;

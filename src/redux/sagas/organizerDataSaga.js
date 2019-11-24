@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 function* fetchMyCreatedEvents() {
     try {
@@ -9,7 +9,6 @@ function* fetchMyCreatedEvents() {
         console.log('error in organizerDataSaga, fetchMyCreatedEvents request failed with error:', error);
     }
 }
-
 
 
 function* organizerDataSaga() {

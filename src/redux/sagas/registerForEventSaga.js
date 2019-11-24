@@ -12,7 +12,6 @@ function* registerEvent(action) {
 }
 
 
-
 function* registerForEventSaga() {
     yield takeLatest('EVENT_REGISTER', registerEvent);
 }
