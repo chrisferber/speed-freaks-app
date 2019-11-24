@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import AttendingEventTable from '../AttendingEventTable/AttendingEventTable';
 
 class MyEventsListItem extends Component {
 
@@ -13,16 +14,16 @@ class MyEventsListItem extends Component {
         this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event });
 
         this.setState({
-            toDetails: true,
+            toDetails: !this.state.toDetails,
         });
     }
 
     handleEventAttendeesButtonClick = (id) => {
-        // this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event });
+        this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event });
         this.props.dispatch({ type: 'FETCH_REGISTERED', payload: id });
         console.log('in handleEventAttendeesButtonClick, this.props.event:', id);
         this.setState({
-            toggleAttendees: true,
+            toggleAttendees: !this.state.toggleAttendees,
         });
     }
 
@@ -53,21 +54,24 @@ class MyEventsListItem extends Component {
                                         <th>
                                             Email
                                         </th>
+                                        <th>
+                                            Make
+                                        </th>
+                                        <th>
+                                            Model
+                                        </th>
+                                        <th>
+                                            Year
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.props.reduxState.attendingEvent.map((user) => {
-                                        // this.props.dispatch({ type: 'FETCH_REGISTERED_VEHICLE', payload: user.user_id })
+                                        
                                         return(
-                                            <tr key={user.user_id}>
-                                                <td>
-                                                    {user.username}
-                                                </td>
-                                                <td>
-                                                    {user.email}
-                                                </td>
-                                            </tr>
+                                            <AttendingEventTable key={user.user_id} user={user} />
                                         );
+                                        // this.props.dispatch({ type: 'FETCH_REGISTERED_VEHICLE', payload: user.user_id })
                                     })}
                                 </tbody>
                             </table>

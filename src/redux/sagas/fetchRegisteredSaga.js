@@ -13,7 +13,10 @@ function* fetchRegistered(action) {
 
 function* fetchRegisteredVehicles(action) {
     try {
+        console.log('action.payload for fetchRegisteredVehicles saga is:', action.payload);
         const response = yield axios.get(`/api/organizer/vehicles/${action.payload}`);
+        console.log('response.data for fetchRegisteredVehicles saga is:', response.data);
+        // yield put({ type: 'CLEAR_ATTENDEES_VEHICLES' });
         yield put({ type: 'SET_ATTENDEES_VEHICLES', payload: response.data });
     } catch (error) {
         console.log('error in organizerDataSaga, GET request for fetchRegisteredVehicles with:', error)
