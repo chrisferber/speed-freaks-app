@@ -31,13 +31,22 @@ router.get('/attending/:id', (req, res) => {
         .then((result) => {
             console.log('result.rows for /attending get in organizer.router.js:', result.rows);
             res.send(result.rows);
-            // const queryText = `SELECT "username", "email" FROM "user"
-            // WHERE $1=$2`
-            // const queryValues = [ req.params.id, result.rows ]
-            // pool.query(queryText, queryValues);
-        // })
-        // .then((result) => {
-        //     res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('error in organizer.router.js in /attending GET request', error);
+        })
+});
+
+router.get('/vehicles/:id', (req, res) => {
+    const queryText = `SELECT * FROM "vehicle"
+    WHERE "user_id" = $1`
+    ;
+    console.log('req.params.id for /vehicles get in organizer.router.js:', req.params.id);
+
+    pool.query(queryText, [req.params.id])
+        .then((result) => {
+            console.log('result.rows for /vehicle get in organizer.router.js:', result.rows);
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log('error in organizer.router.js in /attending GET request', error);

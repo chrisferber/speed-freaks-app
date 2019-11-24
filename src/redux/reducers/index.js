@@ -8,6 +8,7 @@ import registerForEventReducer from './registerForEventReducer';
 import vehicleReducer from './vehicleReducer';
 import organizerDataReducer from './organizerDataReducer';
 import attendingEvent from './eventAttendeesReducer';
+import attendeesVehicles from './attendeesVehiclesReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
  vehicleReducer,
  organizerDataReducer,
  attendingEvent,
+ attendeesVehicles,
 });
 
 export default rootReducer;

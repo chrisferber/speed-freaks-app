@@ -44,7 +44,33 @@ class MyEventsListItem extends Component {
                 <div>
                     {this.state.toggleAttendees && 
                         <div>
-                            Hello
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Username
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.props.reduxState.attendingEvent.map((user) => {
+                                        // this.props.dispatch({ type: 'FETCH_REGISTERED_VEHICLE', payload: user.user_id })
+                                        return(
+                                            <tr key={user.user_id}>
+                                                <td>
+                                                    {user.username}
+                                                </td>
+                                                <td>
+                                                    {user.email}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
                     }
                 </div>
