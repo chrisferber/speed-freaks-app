@@ -14,8 +14,6 @@ class MyEvents extends Component {
 
     render() {
 
-        // const event = this.props.reduxstate.organizerDataReducer;
-
         return (
             <div className="EventDetails">
                 <h1>
