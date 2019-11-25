@@ -19,10 +19,20 @@ function* postEvent(action) {
     }
 }
 
+function* editEvent(action) {
+    try{
+        const response = yield axios.put(`/api/events/edit/${action.payload.eventId}`, action.payload);
+        yield put({ type: 'SET_CURRENT_EVENT', payload: response.data });
+    } catch (error) {
+        console.log('error in editEvent put request in eventsSaga.js with:', error);
+    }
+}
+
 
 function* eventsSaga() {
     yield takeLatest('FETCH_EVENTS', fetchEvents);
     yield takeLatest('CREATE_EVENT', postEvent);
+    yield takeLatest('EDIT_EVENT', editEvent);
 }
 
 export default eventsSaga;

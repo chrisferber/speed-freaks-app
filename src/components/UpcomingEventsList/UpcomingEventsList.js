@@ -10,7 +10,7 @@ class UpcomingEventsList extends Component {
     }
 
     handleDetailsButtonClick = () => {
-        this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event })
+        this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: [this.props.event] })
 
         this.setState({
             toDetails: true,

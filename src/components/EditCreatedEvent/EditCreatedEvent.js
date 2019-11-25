@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 class EditCreatedEvent extends Component {
 
     state = {
-        eventTitle: '',
-        eventStartDate: '',
-        eventEndDate: '',
-        upcomingDescription: '',
-        detailsDescription: '',
-        organizerContact: '',
+        eventId: this.props.reduxState.currentEvent[0].id,
+        eventTitle: this.props.reduxState.currentEvent[0].event_name,
+        eventStartDate: this.props.reduxState.currentEvent[0].event_date_start,
+        eventEndDate: this.props.reduxState.currentEvent[0].event_date_end,
+        upcomingDescription: this.props.reduxState.currentEvent[0].upcoming_description,
+        detailsDescription: this.props.reduxState.currentEvent[0].details_description,
+        organizerContact: this.props.reduxState.currentEvent[0].admin_contact,
     }
 
     handleSubmit = (event) => {

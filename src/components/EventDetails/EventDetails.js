@@ -9,7 +9,7 @@ class EventDetails extends Component {
   }
 
   registerForEvent = () => {
-    this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent })
+    this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent[0] })
   }
 
   handleEditEventButtonClick = () => {
@@ -27,15 +27,15 @@ class EventDetails extends Component {
       <>
         <div className="EventDetails">
           <h2>
-            {this.props.reduxState.currentEvent.event_name}
+            {this.props.reduxState.currentEvent[0].event_name}
           </h2>
-          <p>{this.props.reduxState.currentEvent.event_date_start}</p>
-          <p>{this.props.reduxState.currentEvent.event_date_end}</p>
-          <p>{this.props.reduxState.currentEvent.details_description}</p>
-          <p>{this.props.reduxState.currentEvent.admin_contact}</p>
+          <p>{this.props.reduxState.currentEvent[0].event_date_start}</p>
+          <p>{this.props.reduxState.currentEvent[0].event_date_end}</p>
+          <p>{this.props.reduxState.currentEvent[0].details_description}</p>
+          <p>{this.props.reduxState.currentEvent[0].admin_contact}</p>
           <button onClick={this.registerForEvent}>Register</button>
         </div>
-        {this.props.reduxState.user.id === this.props.reduxState.currentEvent.created_id &&
+        {this.props.reduxState.user.id === this.props.reduxState.currentEvent[0].created_id &&
           <div>
             <button onClick={this.handleEditEventButtonClick}>{this.state.toggleEditEvent ? 'Collapse Edit View' : 'Edit Event'}</button>
             <button onClick={this.handleDeleteEventButtonClick}>Delete Event</button>
