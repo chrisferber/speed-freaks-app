@@ -28,11 +28,22 @@ function* editEvent(action) {
     }
 }
 
+function* deleteEvent(action) {
+    try{
+        yield axios.delete(`/api/events/delete/${action.payload.id}`);
+        yield put({ type: 'FETCH_EVENTS' });
+        // yield put({ type: 'SET_CURRENT_EVENT' });
+    } catch (error) {
+        console.log('error in deleteEvent deletEvent in eventsSaga.js with:', error);
+    }
+}
+
 
 function* eventsSaga() {
     yield takeLatest('FETCH_EVENTS', fetchEvents);
     yield takeLatest('CREATE_EVENT', postEvent);
     yield takeLatest('EDIT_EVENT', editEvent);
+    yield takeLatest('DELETE_EVENT', deleteEvent);
 }
 
 export default eventsSaga;

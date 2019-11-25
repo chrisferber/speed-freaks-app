@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditCreatedEvent from '../EditCreatedEvent/EditCreatedEvent';
+import { Redirect } from 'react-router-dom';
 
 class EventDetails extends Component {
 
   state = {
     toggleEditEvent: false,
+    toUpcomingEvents: false,
   }
 
   registerForEvent = () => {
@@ -20,9 +22,16 @@ class EventDetails extends Component {
 
   handleDeleteEventButtonClick = () => {
     console.log('delete event button was clicked in EventDetails.js');
+    this.props.dispatch({ type: 'DELETE_EVENT', payload: this.props.reduxState.currentEvent[0] })
+    this.setState({
+      toUpcomingEvents: true,
+    })
   }
 
   render() {
+    if (this.state.toUpcomingEvents === true) {
+      return <Redirect to='/upcoming-events' />
+    }
     return (
       <>
         <div className="EventDetails">
@@ -37,12 +46,16 @@ class EventDetails extends Component {
         </div>
         {this.props.reduxState.user.id === this.props.reduxState.currentEvent[0].created_id &&
           <div>
-            <button onClick={this.handleEditEventButtonClick}>{this.state.toggleEditEvent ? 'Collapse Edit View' : 'Edit Event'}</button>
-            <button onClick={this.handleDeleteEventButtonClick}>Delete Event</button>
+            <div>
+              <button onClick={this.handleEditEventButtonClick}>{this.state.toggleEditEvent ? 'Collapse Edit View' : 'Edit Event'}</button>
+            </div>
+            <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this event? This cannot be undone.')) this.handleDeleteEventButtonClick() }} >
+              <button>Delete Event</button>
+            </div>
           </div>
         }
         {this.state.toggleEditEvent &&
-          <div className="renderEditEvent">
+          <div className="renderEditCreatedEvent">
             <EditCreatedEvent />
           </div>
         }
