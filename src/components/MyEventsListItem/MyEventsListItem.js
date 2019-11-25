@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import AttendingEventTable from '../AttendingEventTable/AttendingEventTable';
 
 class MyEventsListItem extends Component {
 
@@ -21,6 +20,7 @@ class MyEventsListItem extends Component {
     handleEventAttendeesButtonClick = (id) => {
         this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event });
         this.props.dispatch({ type: 'FETCH_REGISTERED', payload: id });
+
         console.log('in handleEventAttendeesButtonClick, this.props.event:', id);
         this.setState({
             toggleAttendees: !this.state.toggleAttendees,
@@ -43,7 +43,8 @@ class MyEventsListItem extends Component {
                     <button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>See Event Attendees</button>
                 </div>
                 <div>
-                    {this.state.toggleAttendees && 
+                    {this.state.toggleAttendees &&
+
                         <div>
                             <table>
                                 <thead>
@@ -65,15 +66,30 @@ class MyEventsListItem extends Component {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {this.props.reduxState.attendingEvent.map((user) => {
-                                        
-                                        return(
-                                            <AttendingEventTable key={user.user_id} user={user} />
-                                        );
-                                        // this.props.dispatch({ type: 'FETCH_REGISTERED_VEHICLE', payload: user.user_id })
-                                    })}
-                                </tbody>
+                                {this.props.reduxState.attendingEvent.map((user) => {
+                                    return (
+                                        <tbody key={user.user_id}>
+                                            <tr>
+                                                <td>
+                                                    {user.username}
+                                                </td>
+                                                <td>
+                                                    {user.email}
+                                                </td>
+                                                <td>
+                                                    {user.make}
+                                                </td>
+                                                <td>
+                                                    {user.model}
+                                                </td>
+                                                <td>
+                                                    {user.year}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    );
+                                })}
+
                             </table>
                         </div>
                     }

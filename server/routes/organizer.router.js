@@ -20,8 +20,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/attending/:id', (req, res) => {
-    const queryText = `SELECT "username", "email", "user_id", "event_id" FROM "user"
-    JOIN "user_event" ON "user_event"."user_id" = "user"."id"
+    const queryText = `SELECT "user"."username", "user"."email", "user"."events", "user_event"."user_id", "make", "model", "year" FROM "user"
+    INNER JOIN "user_event" ON "user_event"."user_id" = "user"."id"
+    INNER JOIN "vehicle" ON "vehicle"."user_id" = "user"."id"
     WHERE "user_event"."event_id" = $1
     ORDER BY "user"."id"`
     ;
@@ -34,22 +35,6 @@ router.get('/attending/:id', (req, res) => {
         })
         .catch((error) => {
             console.log('error in organizer.router.js in /attending GET request', error);
-        })
-});
-
-router.get('/vehicles/:id', (req, res) => {
-    const queryText = `SELECT * FROM "vehicle"
-    WHERE "user_id" = $1`
-    ;
-    console.log('req.params.id for /vehicles get in organizer.router.js:', req.params.id);
-
-    pool.query(queryText, [req.params.id])
-        .then((result) => {
-            console.log('result.rows for /vehicles get in organizer.router.js:', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('error in organizer.router.js in /vehicles GET request', error);
         })
 });
 
