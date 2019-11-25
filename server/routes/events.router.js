@@ -58,5 +58,48 @@ router.post('/create', (req, res) => {
         })
 })
 
+router.put('/edit/:id', (req, res) => {
+    pool.query(`SELECT * from "event"
+    WHERE "id" = $1`, [req.params.id])
+        .then((result) => {
+
+            const admin = result.rows[0].created_id;
+            if (admin === req.user.id) {
+                const queryText = `UPDATE "event"
+                SET "event_name" = $1,
+                "event_date_start" = $2,
+                "event_date_end" = $3,
+                "upcoming_description" = $4,
+                "details_description" = $5,
+                "admin_contact" = $6
+                WHERE "id" = $7
+                RETURNING *`;
+
+                const queryValues = [
+                    req.body.eventTitle,
+                    req.body.eventStartDate,
+                    req.body.eventEndDate,
+                    req.body.upcomingDescription,
+                    req.body.detailsDescription,
+                    req.body.organizerContact,
+                    req.params.id,
+                ];
+                pool.query(queryText, queryValues)
+                .then((result) => {
+                    res.send(result.rows);
+                })
+                .catch((error) => {
+                    console.log('error making put request to edit event in events.router.js with:', error);
+                    res.sendStatus(500);
+                })
+            } else {
+                console.log('user is not authorized to edit this event. /edit/:id in events.router.js');
+            }
+        })
+
+
+
+})
+
 
 module.exports = router;

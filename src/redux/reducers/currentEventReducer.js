@@ -1,4 +1,4 @@
-const currentEventReducer = (state = {}, action) => {
+const currentEventReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_CURRENT_EVENT':
             return action.payload;
