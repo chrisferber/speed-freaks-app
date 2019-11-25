@@ -33,7 +33,7 @@ class EventDetails extends Component {
       return <Redirect to='/upcoming-events' />
     }
     return (
-      <>
+        <>
         <div className="EventDetails">
           <h2>
             {this.props.reduxState.currentEvent[0].event_name}
@@ -59,7 +59,8 @@ class EventDetails extends Component {
             <EditCreatedEvent />
           </div>
         }
-      </>
+        </>
+      
     );
   }
 }

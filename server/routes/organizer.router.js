@@ -38,5 +38,31 @@ router.get('/attending/:id', (req, res) => {
         })
 });
 
+router.put('/complete-registration', (req, res) => {
+    pool.query(`SELECT * FROM "event" WHERE "id" = $1`, [req.body.event_id])
+    .then((result) => {
+        const admin = result.rows[0].created_id;
+        if(admin === req.user.id) {
+            const queryText = `UPDATE "user"
+            SET "events" = $1
+            WHERE "id" = $2`;
+            const queryValues = [
+                req.body.event_id,
+                req.body.user_id
+            ]
+            pool.query(queryText, queryValues)
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                console.log('post request to /complete-registration in organizer.router.js failed with:', error);
+                res.sendStatus(500);
+            })
+        } else {
+            console.log('user is not authorized to post to complete-registration for this user or event');
+        }
+    })
+})
+
 
 module.exports = router;

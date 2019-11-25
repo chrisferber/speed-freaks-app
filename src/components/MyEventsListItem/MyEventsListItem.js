@@ -27,6 +27,15 @@ class MyEventsListItem extends Component {
         });
     }
 
+    markCompletelyRegistered = (userId) => {
+        console.log('mark as registered button clicked with user Id:', userId);
+        this.props.dispatch({ type: 'COMPLETE_REGISTRATION', payload: { user_id: userId, event_id: this.props.event.id } });
+    }
+
+    markRegistrationIncomplete = (userId) => {
+        console.log('mark registration incomplete button clicked with user Id:', userId);
+    }
+
     render() {
 
         if (this.state.toDetails === true) {
@@ -64,6 +73,12 @@ class MyEventsListItem extends Component {
                                         <th>
                                             Year
                                         </th>
+                                        <th>
+                                            Registration Complete
+                                        </th>
+                                        <th>
+
+                                        </th>
                                     </tr>
                                 </thead>
                                 {this.props.reduxState.attendingEvent.map((user) => {
@@ -85,6 +100,28 @@ class MyEventsListItem extends Component {
                                                 <td>
                                                     {user.year}
                                                 </td>
+
+                                                {user.events ?
+                                                    <td>
+                                                        yes
+                                                    </td> :
+                                                    <td>
+                                                        no
+                                                    </td>
+                                                }
+                                                {user.events ?
+                                                    <td>
+                                                        <button onClick={() => this.markRegistrationIncomplete(user.user_id)}>
+                                                            Mark Registration Incomplete
+                                                    </button>
+                                                    </td> :
+                                                    <td>
+                                                        <button onClick={() => this.markCompletelyRegistered(user.user_id)}>
+                                                            Mark as Registered
+                                                    </button>
+                                                    </td>
+                                                }
+
                                             </tr>
                                         </tbody>
                                     );

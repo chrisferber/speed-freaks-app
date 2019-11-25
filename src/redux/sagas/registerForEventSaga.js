@@ -11,9 +11,19 @@ function* registerEvent(action) {
     }
 }
 
+function* completeRegistration(action) {
+    try {
+        const response = yield axios.put('/api/organizer/complete-registration', action.payload);
+        // yield put({ type: 'FETCH_MY_CREATED_EVENTS' });
+    } catch (error) {
+        console.log('request failed completeRegistration function in registerForEventSaga.js with:', error);
+    }
+}
+
 
 function* registerForEventSaga() {
     yield takeLatest('EVENT_REGISTER', registerEvent);
+    yield takeLatest('COMPLETE_REGISTRATION', completeRegistration);
 }
 
 export default registerForEventSaga;
