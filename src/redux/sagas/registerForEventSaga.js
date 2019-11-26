@@ -14,9 +14,18 @@ function* registerEvent(action) {
 function* completeRegistration(action) {
     try {
         const response = yield axios.put('/api/organizer/complete-registration', action.payload);
-        // yield put({ type: 'FETCH_MY_CREATED_EVENTS' });
+        yield put({ type: 'FETCH_REGISTERED', payload: response.data[0] });
     } catch (error) {
         console.log('request failed completeRegistration function in registerForEventSaga.js with:', error);
+    }
+}
+
+function* markRegistrationIncomplete(action) {
+    try {
+        const response = yield axios.put('/api/organizer/registration-incomplete', action.payload);
+        yield put({ type: 'FETCH_REGISTERED', payload: response.data[0] });
+    } catch (error) {
+        console.log('request failed markRegistrationIncomplete function in registerForEventSaga.js with:', error);
     }
 }
 
@@ -24,6 +33,7 @@ function* completeRegistration(action) {
 function* registerForEventSaga() {
     yield takeLatest('EVENT_REGISTER', registerEvent);
     yield takeLatest('COMPLETE_REGISTRATION', completeRegistration);
+    yield takeLatest('MARK_REGISTRATION_INCOMPLETE', markRegistrationIncomplete);
 }
 
 export default registerForEventSaga;
