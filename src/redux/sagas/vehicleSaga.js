@@ -5,7 +5,7 @@ function* fetchVehicle() {
     try {
         const response = yield axios.get('/api/vehicle');
         console.log('response from GET route in vehicleSaga:', response);
-        yield put({ type: 'SET_USER_VEHICLE', payload: response.data });
+        yield put({ type: 'SET_USER_VEHICLE', payload: response.data[0] });
     } catch (error) {
         console.log('error in vehicleSaga, fetchVehicle request failed with error:', error);
     }
