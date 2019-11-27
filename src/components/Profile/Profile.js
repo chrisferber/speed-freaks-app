@@ -20,7 +20,7 @@ class Profile extends Component {
     }
 
     fetchAllUserData = () => {
-        this.props.dispatch({ type:'FETCH_USER_EVENTS' });
+        this.props.dispatch({ type: 'FETCH_USER_EVENTS' });
         this.props.dispatch({ type: 'FETCH_EVENTS' });
     }
 
@@ -41,47 +41,57 @@ class Profile extends Component {
         });
     }
 
-    captureNewMake = (event) => {
-        this.setState({
-            ...this.state,
-            newVehicle: {
-                ...this.state.newVehicle,
-                make: event.target.value,
-            }
-        });
-        console.log(this.state);
-    }
+    // captureNewMake = (event) => {
+    //     this.setState({
+    //         ...this.state,
+    //         newVehicle: {
+    //             ...this.state.newVehicle,
+    //             make: event.target.value,
+    //         }
+    //     });
+    //     console.log(this.state);
+    // }
 
-    captureNewModel = (event) => {
-        this.setState({
-            ...this.state,
-            newVehicle: {
-                ...this.state.newVehicle,
-                model: event.target.value,
-            }
-        });
-        console.log(this.state);
-    }
+    // captureNewModel = (event) => {
+    //     this.setState({
+    //         ...this.state,
+    //         newVehicle: {
+    //             ...this.state.newVehicle,
+    //             model: event.target.value,
+    //         }
+    //     });
+    //     console.log(this.state);
+    // }
 
-    captureNewYear = (event) => {
-        this.setState({
-            ...this.state,
-            newVehicle: {
-                ...this.state.newVehicle,
-                year: event.target.value,
-            }
-        });
-        console.log(this.state);
-    }
+    // captureNewYear = (event) => {
+    //     this.setState({
+    //         ...this.state,
+    //         newVehicle: {
+    //             ...this.state.newVehicle,
+    //             year: event.target.value,
+    //         }
+    //     });
+    //     console.log(this.state);
+    // }
 
     postVehicle = () => {
-        this.props.dispatch({ type:'POST_NEW_VEHICLE', payload: this.state.newVehicle, });
+        this.props.dispatch({ type: 'POST_NEW_VEHICLE', payload: this.state.newVehicle, });
         this.handleAddButtonClick();
     }
 
     updateVehicle = () => {
-        this.props.dispatch({ type:'UPDATE_NEW_VEHICLE', payload: this.state.newVehicle, });
+        this.props.dispatch({ type: 'UPDATE_NEW_VEHICLE', payload: this.state.newVehicle, });
         this.handleEditButtonClick();
+    }
+
+    handleInputChangeFor = propertyName => (event) => {
+        this.setState({
+            ...this.state,
+            newVehicle: {
+                ...this.state.newVehicle,
+                [propertyName]: event.target.value,
+            }
+        });
     }
 
     render() {
@@ -110,18 +120,18 @@ class Profile extends Component {
                     {this.state.addVehicle &&
                         <div>
                             <h3>Vehicle to be used at events:</h3>
-                            <p>Make:</p><input onChange={this.captureNewMake} placeholder="eg. 'BMW', 'Audi', 'Porsche'" value={this.state.newVehicle.make}></input>
-                            <p>Model:</p><input onChange={this.captureNewModel} placeholder="eg. 'M2', 'R8', 'Cayman GT4'" value={this.state.newVehicle.model}></input>
-                            <p>Year:</p><input onChange={this.captureNewYear} placeholder="eg. '1999'" value={this.state.newVehicle.year}></input>
+                            <p>Make:</p><input onChange={this.handleInputChangeFor('make')} placeholder="eg. 'BMW', 'Audi', 'Porsche'" value={this.state.newVehicle.make}></input>
+                            <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder="eg. 'M2', 'R8', 'Cayman GT4'" value={this.state.newVehicle.model}></input>
+                            <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder="eg. '1999'" value={this.state.newVehicle.year}></input>
                             <button onClick={this.postVehicle}>Save Vehicle</button>
                         </div>
                     }
                     {this.state.editVehicle &&
                         <div>
                             <h3>Vehicle to be used at events:</h3>
-                            <p>Make:</p><input onChange={this.captureNewMake} placeholder={this.props.reduxState.vehicleReducer[0].make} value={this.state.newVehicle.make}></input>
-                            <p>Model:</p><input onChange={this.captureNewModel} placeholder={this.props.reduxState.vehicleReducer[0].model} value={this.state.newVehicle.model}></input>
-                            <p>Year:</p><input onChange={this.captureNewYear} placeholder={this.props.reduxState.vehicleReducer[0].year} value={this.state.newVehicle.year}></input>
+                            <p>Make:</p><input onChange={this.handleInputChangeFor('make')} placeholder={this.props.reduxState.vehicleReducer[0].make} value={this.state.newVehicle.make}></input>
+                            <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder={this.props.reduxState.vehicleReducer[0].model} value={this.state.newVehicle.model}></input>
+                            <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder={this.props.reduxState.vehicleReducer[0].year} value={this.state.newVehicle.year}></input>
                             <button onClick={this.updateVehicle}>Save Vehicle</button>
                         </div>
                     }
