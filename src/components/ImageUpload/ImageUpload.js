@@ -43,10 +43,10 @@ constructor(props){
 
   }
   handleUpload = (ev) => {
-    let file = this.uploadInput.files[0];
+    let file = this.upload.files[0];
     // Split the filename to get the name and type
 
-    let fileParts = this.uploadInput.files[0].name.split('.');
+    let fileParts = this.upload.files[0].name.split('.');
     let fileName = fileParts[0];
     let fileType = fileParts[1];
     console.log("Preparing the upload");
@@ -62,6 +62,7 @@ constructor(props){
       const url = returnData.url;
       this.setState({url: url})
       console.log("Recieved a signed request ", signedRequest);
+      console.log('returnData for axios.post to /sign_s3:', returnData);
 
       const options = {
         headers: {
@@ -113,7 +114,7 @@ console.log("About to axios.put, options=", options);
           <h1>UPLOAD A FILE</h1>
           {this.state.success ? <SuccessMessage/> : null}
           {this.state.error ? <ErrorMessage/> : null}
-          <input onChange={this.handleChange} ref={(ref) => { this.uploadInput = ref; }} type="file"/>
+          <input onChange={this.handleChange} ref={(ref) => { this.upload = ref; }} type="file"/>
           <br/>
           <button onClick={this.handleUpload}>UPLOAD</button>
         </center>

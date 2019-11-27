@@ -16,6 +16,12 @@ class Profile extends Component {
 
     componentDidMount() {
         this.fetchVehicle();
+        this.fetchAllUserData();
+    }
+
+    fetchAllUserData = () => {
+        this.props.dispatch({ type:'FETCH_USER_EVENTS' });
+        this.props.dispatch({ type: 'FETCH_EVENTS' });
     }
 
     fetchVehicle = () => {
@@ -119,6 +125,10 @@ class Profile extends Component {
                             <button onClick={this.updateVehicle}>Save Vehicle</button>
                         </div>
                     }
+                </div>
+                <div className="myEvents">
+                    <h3>My Events:</h3>
+
                 </div>
             </>
         );
