@@ -94,9 +94,14 @@ class Profile extends Component {
                         </div>
                     }
                 </div>
-                {/* {this.props.reduxState.userEvents &&
+                {this.props.reduxState.userEvents ?
                 <UserEvents />
-    } */}
+                :
+                <div>
+                <h3>My Events</h3>
+                <p>You are not currently registered for any upcoming events.</p>
+                </div>
+    }
                  
             </>
         );

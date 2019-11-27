@@ -22,7 +22,7 @@ class UserEvents extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.props.redexState.userEvents.map((event) => {
+                                {this.props.reduxState.userEvents.map((event) => {
                                     return (
                                         <tr key={event.event_id}>
                                             <td>
