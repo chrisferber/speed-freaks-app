@@ -11,6 +11,7 @@ class MyEventsListItem extends Component {
 
     handleDetailsButtonClick = () => {
         this.props.dispatch({ type: 'SET_CURRENT_EVENT', payload: this.props.event });
+        this.props.dispatch({ type: 'FETCH_USER_EVENTS' });
 
         this.setState({
             toDetails: !this.state.toDetails,
