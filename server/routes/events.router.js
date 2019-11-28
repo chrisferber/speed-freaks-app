@@ -13,6 +13,29 @@ router.get('/', (req, res) => {
         })
 });
 
+router.get('/my-registered', (req, res) => {
+    const queryText = `SELECT "event_name", "event_date_start", "event_date_end", "user_id", "event_id", "registration_complete" FROM "event"
+    JOIN "user_event" ON "user_event"."event_id" = "event"."id"
+    WHERE "user_id" = $1`;
+
+    // const queryText = `SELECT "user"."username", "user"."email", "user_event"."user_id", "user_event"."event_id", "user_event"."registration_complete", "make", "model", "year" FROM "user"
+    // INNER JOIN "user_event" ON "user_event"."user_id" = "user"."id"
+    // INNER JOIN "vehicle" ON "vehicle"."user_id" = "user"."id"
+    // WHERE "user_event"."user_id" = $1
+    // ORDER BY "user_event"."event_id"`;
+
+    pool.query(queryText, [req.user.id])
+    .then((result) => {
+        console.log('result for get request to /my-registered:', result.rows);
+        res.send(result.rows);
+    })
+    .catch((error) => {
+        console.log('error in get request to /my-registered, error:', error);
+        res.sendStatus(500);
+    })
+})
+
+
 router.post('/register', (req, res) => {
     const queryText = `INSERT INTO "user_event" ("user_id", "event_id")
     VALUES ($1, $2)`;

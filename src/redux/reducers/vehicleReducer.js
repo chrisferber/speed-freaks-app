@@ -1,4 +1,4 @@
-const vehicleReducer = (state = [], action) => {
+const vehicleReducer = (state = {}, action) => {
     switch (action.type) {
         case 'SET_USER_VEHICLE':
             return action.payload;
