@@ -26,6 +26,9 @@ class UpcomingEventsList extends Component {
         return (
             <>
                 <h2>{this.props.event.event_name}</h2>
+                {this.props.event.image_url &&
+                <img src={this.props.event.image_url} height="300px" />
+    }
                 <p>{this.props.event.event_date_start}</p>
                 <p>{this.props.event.event_date_end}</p>
                 <p>{this.props.event.upcoming_description}</p>

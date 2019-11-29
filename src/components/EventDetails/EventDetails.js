@@ -40,6 +40,9 @@ class EventDetails extends Component {
           <h2>
             {this.props.reduxState.currentEvent.event_name}
           </h2>
+          {this.props.reduxState.currentEvent.image_url &&
+            <img src={this.props.reduxState.currentEvent.image_url} height="300px" />
+          }
           <p>{this.props.reduxState.currentEvent.event_date_start}</p>
           <p>{this.props.reduxState.currentEvent.event_date_end}</p>
           <p>{this.props.reduxState.currentEvent.details_description}</p>
