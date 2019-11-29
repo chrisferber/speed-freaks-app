@@ -11,7 +11,7 @@ class EventDetails extends Component {
   }
 
   registerForEvent = () => {
-    this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent[0] })
+    this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent })
   }
 
   handleEditEventButtonClick = () => {
@@ -22,7 +22,7 @@ class EventDetails extends Component {
 
   handleDeleteEventButtonClick = () => {
     console.log('delete event button was clicked in EventDetails.js');
-    this.props.dispatch({ type: 'DELETE_EVENT', payload: this.props.reduxState.currentEvent[0] })
+    this.props.dispatch({ type: 'DELETE_EVENT', payload: this.props.reduxState.currentEvent })
     this.setState({
       toUpcomingEvents: true,
     })
@@ -33,18 +33,18 @@ class EventDetails extends Component {
       return <Redirect to='/upcoming-events' />
     }
     return (
-        <>
+      <>
         <div className="EventDetails">
           <h2>
-            {this.props.reduxState.currentEvent[0].event_name}
+            {this.props.reduxState.currentEvent.event_name}
           </h2>
-          <p>{this.props.reduxState.currentEvent[0].event_date_start}</p>
-          <p>{this.props.reduxState.currentEvent[0].event_date_end}</p>
-          <p>{this.props.reduxState.currentEvent[0].details_description}</p>
-          <p>{this.props.reduxState.currentEvent[0].admin_contact}</p>
+          <p>{this.props.reduxState.currentEvent.event_date_start}</p>
+          <p>{this.props.reduxState.currentEvent.event_date_end}</p>
+          <p>{this.props.reduxState.currentEvent.details_description}</p>
+          <p>{this.props.reduxState.currentEvent.admin_contact}</p>
           <button onClick={this.registerForEvent}>Register</button>
         </div>
-        {this.props.reduxState.user.id === this.props.reduxState.currentEvent[0].created_id &&
+        {this.props.reduxState.user.id === this.props.reduxState.currentEvent.created_id &&
           <div>
             <div>
               <button onClick={this.handleEditEventButtonClick}>{this.state.toggleEditEvent ? 'Collapse Edit View' : 'Edit Event'}</button>
@@ -59,8 +59,27 @@ class EventDetails extends Component {
             <EditCreatedEvent />
           </div>
         }
-        </>
-      
+        <div className="registrationStatusMessage">
+          {this.props.reduxState.userEvents.map((registration) => {
+            if (registration.event_id === this.props.reduxState.currentEvent.id) {
+              return (
+                <div key={registration.event_id}>
+                  <h3>You are already registered for this event!</h3>
+                  <div>
+                    {registration.registration_complete ?
+                      <p>Your current registration status is Complete. You are all set to race! Make sure you are checking your email for information from the organizer.</p> :
+                      <p>Your current registration status is Pending. The event organizer has not yet checked you off as fully registered. Remember to be checking your email for details on any prerequisites needed for registration.</p>
+                    }
+                  </div>
+                </div>
+              );
+            }
+          })
+
+          }
+        </div>
+      </>
+
     );
   }
 }
