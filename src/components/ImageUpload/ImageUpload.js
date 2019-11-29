@@ -60,7 +60,7 @@ constructor(props){
       const returnData = response.data.data.returnData;
       const signedRequest = returnData.signedRequest;
       const url = returnData.url;
-      this.setState({url: url})
+      this.props.handleAddImageUrl(url);
       console.log("Recieved a signed request ", signedRequest);
       console.log('returnData for axios.post to /sign_s3:', returnData);
 
@@ -95,7 +95,7 @@ console.log("About to axios.put, options=", options);
     const SuccessMessage = () => (
       <div style={{padding:50}}>
         <h3 style={{color: 'green'}}>SUCCESSFUL UPLOAD</h3>
-        <a href={this.state.url}>Access the file here</a>
+        {/* <a href={this.state.url}>Access the file here</a> */}
         <br/>
       </div>
     )
