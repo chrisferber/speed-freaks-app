@@ -5,12 +5,24 @@ import ImageUpload from '../ImageUpload/ImageUpload';
 class CreateEvent extends Component {
 
   state = {
-    eventTitle: '',
-    eventStartDate: '',
-    eventEndDate: '',
-    upcomingDescription: '',
-    detailsDescription: '',
-    organizerContact: '',
+    uploadImage: false,
+    newEvent: {
+      eventTitle: '',
+      eventStartDate: '',
+      eventEndDate: '',
+      upcomingDescription: '',
+      detailsDescription: '',
+      organizerContact: '',
+      imageUrl: '',
+    }
+  }
+
+  handleAddImage = (event) => {
+    this.setState({
+      ...this.state.newEvent,
+      uploadImage: !this.state.uploadImage,
+    })
+    console.log(this.state);
   }
 
   handleSubmit = (event) => {
@@ -29,17 +41,24 @@ class CreateEvent extends Component {
 
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
-      [propertyName]: event.target.value,
+      newEvent: {
+        ...this.state.newEvent,
+        [propertyName]: event.target.value,
+      }
     });
   }
 
   render() {
+    if (this.state.uploadImage) {
+      return (
+        <div>
+      <ImageUpload />
+      <button onClick={this.handleAddImage}>Finish Creating Event</button>
+      </div>
+      )}
     return (
       <>
         <h1>Create an Event</h1>
-        <div>
-          <ImageUpload />
-        </div>
         <div className="createEventForm">
           <form onSubmit={this.handleSubmit}>
             <div>
@@ -108,14 +127,22 @@ class CreateEvent extends Component {
                 />
               </label>
             </div>
-            <div>
+            <div className='imageUploadButton' onClick={() => { if (window.confirm('Would you like to add a photo to be displayed with the event?')) this.handleAddImage() }} >
               <input
+                className="create-event"
+                type="button"
+                name="imageUpload"
+                value="Add Event Image"
+              />
+            </div>
+            <div>
+            <input
                 className="create-event"
                 type="submit"
                 name="submit"
                 value="Create Event"
               />
-            </div>
+              </div>
           </form>
         </div>
       </>
