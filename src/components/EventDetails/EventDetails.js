@@ -31,6 +31,8 @@ class EventDetails extends Component {
   render() {
     if (this.state.toUpcomingEvents === true) {
       return <Redirect to='/upcoming-events' />
+    } else if (!this.props.reduxState.currentEvent.event_name) {
+      return <Redirect to='upcoming-events' />
     }
     return (
       <>
