@@ -58,8 +58,8 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    const queryText = `INSERT INTO "event" ("event_name", "event_date_start", "event_date_end", "upcoming_description", "details_description", "admin_contact", "created_id")
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+    const queryText = `INSERT INTO "event" ("event_name", "event_date_start", "event_date_end", "upcoming_description", "details_description", "admin_contact", "created_id", "image_url")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
     console.log('router.post for create event, user id is:', req.user);
     console.log('router.post for create event, req.body is:', req.body);
     const queryValues = [
@@ -70,6 +70,7 @@ router.post('/create', (req, res) => {
         req.body.detailsDescription,
         req.body.organizerContact,
         req.user.id,
+        req.body.imageUrl,
     ];
     pool.query(queryText, queryValues)
         .then(() => {

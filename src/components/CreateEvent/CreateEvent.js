@@ -25,10 +25,20 @@ class CreateEvent extends Component {
     console.log(this.state);
   }
 
+  handleAddImageUrl = (url) => {
+    this.setState({
+      ...this.state,
+      newEvent: {
+        ...this.state.newEvent,
+        imageUrl: url,
+      }
+    })
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
-    this.props.dispatch({ type: 'CREATE_EVENT', payload: this.state });
+    this.props.dispatch({ type: 'CREATE_EVENT', payload: this.state.newEvent });
     this.setState({
       eventTitle: '',
       eventStartDate: '',
@@ -52,7 +62,7 @@ class CreateEvent extends Component {
     if (this.state.uploadImage) {
       return (
         <div>
-      <ImageUpload />
+      <ImageUpload handleAddImageUrl={this.handleAddImageUrl}/>
       <button onClick={this.handleAddImage}>Finish Creating Event</button>
       </div>
       )}
