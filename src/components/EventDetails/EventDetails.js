@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditCreatedEvent from '../EditCreatedEvent/EditCreatedEvent';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 class EventDetails extends Component {
 
@@ -43,8 +44,7 @@ class EventDetails extends Component {
           {this.props.reduxState.currentEvent.image_url &&
             <img src={this.props.reduxState.currentEvent.image_url} height="300px" />
           }
-          <p>{this.props.reduxState.currentEvent.event_date_start}</p>
-          <p>{this.props.reduxState.currentEvent.event_date_end}</p>
+          <p>{moment(this.props.reduxState.currentEvent.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.reduxState.currentEvent.event_date_end).format('MM/DD/YYYY')}</p>
           <p>{this.props.reduxState.currentEvent.details_description}</p>
           <p>{this.props.reduxState.currentEvent.admin_contact}</p>
           <button onClick={this.registerForEvent}>Register</button>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 class UserEvents extends Component {
 
@@ -29,7 +30,7 @@ class UserEvents extends Component {
                                                 {event.event_name}
                                             </td>
                                             <td>
-                                                <p>{event.event_date_start} - {event.event_date_end}</p>
+                                                <p>{moment(event.event_date_start).format('MM/DD/YYYY')}   -   {moment(event.event_date_end).format('MM/DD/YYYY')}</p>
                                             </td>
                                             {event.registration_complete ?
                                             <td>

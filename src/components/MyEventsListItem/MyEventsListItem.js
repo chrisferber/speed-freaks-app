@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 class MyEventsListItem extends Component {
 
@@ -48,8 +49,7 @@ class MyEventsListItem extends Component {
             <>
                 <div>
                     <h3>{this.props.event.event_name}</h3>
-                    <p>{this.props.event.event_date_start}</p>
-                    <p>{this.props.event.event_date_end}</p>
+                    <p>{moment(this.props.event.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.event.event_date_end).format('MM/DD/YYYY')}</p>
                     <button onClick={this.handleDetailsButtonClick}>See Event Details</button>
                     <button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>See Event Attendees</button>
                 </div>
