@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import moment from 'moment';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 class MyEventsListItem extends Component {
 
@@ -50,8 +53,14 @@ class MyEventsListItem extends Component {
                 <div>
                     <h3>{this.props.event.event_name}</h3>
                     <p>{moment(this.props.event.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.event.event_date_end).format('MM/DD/YYYY')}</p>
-                    <button onClick={this.handleDetailsButtonClick}>See Event Details</button>
-                    <button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>See Event Attendees</button>
+                    <Grid item>
+                        <ButtonGroup color="primary" size="small" aria-label="small outlined button group">
+                            <Button onClick={this.handleDetailsButtonClick}>Event Details</Button>
+                            <Button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>Event Attendees</Button>
+                        </ButtonGroup>
+                    </Grid>
+                    {/* <button onClick={this.handleDetailsButtonClick}>See Event Details</button>
+                    <button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>See Event Attendees</button> */}
                 </div>
                 <div>
                     {this.state.toggleAttendees &&
@@ -112,14 +121,14 @@ class MyEventsListItem extends Component {
                                                 }
                                                 {user.registration_complete ?
                                                     <td>
-                                                        <button onClick={() => this.markRegistrationIncomplete(user)}>
+                                                        <Button color="primary" onClick={() => this.markRegistrationIncomplete(user)}>
                                                             Mark Registration Incomplete
-                                                    </button>
+                                                    </Button>
                                                     </td> :
                                                     <td>
-                                                        <button onClick={() => this.markCompletelyRegistered(user)}>
+                                                        <Button color="primary" onClick={() => this.markCompletelyRegistered(user)}>
                                                             Mark as Registered
-                                                    </button>
+                                                    </Button>
                                                     </td>
                                                 }
                                             </tr>
