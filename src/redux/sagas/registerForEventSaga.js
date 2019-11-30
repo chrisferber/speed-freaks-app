@@ -5,7 +5,7 @@ function* registerEvent(action) {
     try {
         const response = yield axios.post('/api/events/register', action.payload);
         console.log('response from POST route in registerForEventSaga:', response);
-        // yield put({ type: 'SET_EVENTS', payload: response.data });
+        yield put({ type: 'FETCH_USER_EVENTS' });
     } catch (error) {
         console.log('error in registerForEventSaga, registerEvent request failed with error:', error);
     }

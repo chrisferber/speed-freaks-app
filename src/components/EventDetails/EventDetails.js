@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditCreatedEvent from '../EditCreatedEvent/EditCreatedEvent';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 class EventDetails extends Component {
 
@@ -43,8 +44,7 @@ class EventDetails extends Component {
           {this.props.reduxState.currentEvent.image_url &&
             <img src={this.props.reduxState.currentEvent.image_url} height="300px" />
           }
-          <p>{this.props.reduxState.currentEvent.event_date_start}</p>
-          <p>{this.props.reduxState.currentEvent.event_date_end}</p>
+          <p>{moment(this.props.reduxState.currentEvent.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.reduxState.currentEvent.event_date_end).format('MM/DD/YYYY')}</p>
           <p>{this.props.reduxState.currentEvent.details_description}</p>
           <p>{this.props.reduxState.currentEvent.admin_contact}</p>
           <button onClick={this.registerForEvent}>Register</button>
@@ -69,13 +69,17 @@ class EventDetails extends Component {
             if (registration.event_id === this.props.reduxState.currentEvent.id) {
               return (
                 <div key={registration.event_id}>
-                  <h3>You are already registered for this event!</h3>
-                  <div>
+                  <h3>You are signed up for this event!</h3>
                     {registration.registration_complete ?
-                      <p>Your current registration status is Complete. You are all set to race! Make sure you are checking your email for information from the organizer.</p> :
-                      <p>Your current registration status is Pending. The event organizer has not yet checked you off as fully registered. Remember to be checking your email for details on any prerequisites needed for registration.</p>
+                    <div>
+                      <h4>Registration Status: Complete</h4>
+                      <p>You are all set to race! Make sure you are checking your email for further event information from the organizer.</p>
+                      </div>:
+                      <div>
+                        <h4>Registration Status: Pending</h4>
+                      <p>The event organizer has not yet checked you off as fully registered. Please check your email frequently as the organizer will be contacting you with info to complete your registration for this event.</p>
+                      </div>
                     }
-                  </div>
                 </div>
               );
             }
