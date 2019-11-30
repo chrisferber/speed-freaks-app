@@ -69,13 +69,17 @@ class EventDetails extends Component {
             if (registration.event_id === this.props.reduxState.currentEvent.id) {
               return (
                 <div key={registration.event_id}>
-                  <h3>You are already registered for this event!</h3>
-                  <div>
+                  <h3>You are signed up for this event!</h3>
                     {registration.registration_complete ?
-                      <p>Your current registration status is Complete. You are all set to race! Make sure you are checking your email for information from the organizer.</p> :
-                      <p>Your current registration status is Pending. The event organizer has not yet checked you off as fully registered. Remember to be checking your email for details on any prerequisites needed for registration.</p>
+                    <div>
+                      <h4>Registration Status: Complete</h4>
+                      <p>You are all set to race! Make sure you are checking your email for further event information from the organizer.</p>
+                      </div>:
+                      <div>
+                        <h4>Registration Status: Pending</h4>
+                      <p>The event organizer has not yet checked you off as fully registered. Please check your email frequently as the organizer will be contacting you with info to complete your registration for this event.</p>
+                      </div>
                     }
-                  </div>
                 </div>
               );
             }
