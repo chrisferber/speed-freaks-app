@@ -121,14 +121,14 @@ class MyEventsListItem extends Component {
                                                 }
                                                 {user.registration_complete ?
                                                     <td>
-                                                        <button onClick={() => this.markRegistrationIncomplete(user)}>
+                                                        <Button color="primary" onClick={() => this.markRegistrationIncomplete(user)}>
                                                             Mark Registration Incomplete
-                                                    </button>
+                                                    </Button>
                                                     </td> :
                                                     <td>
-                                                        <button onClick={() => this.markCompletelyRegistered(user)}>
+                                                        <Button color="primary" onClick={() => this.markCompletelyRegistered(user)}>
                                                             Mark as Registered
-                                                    </button>
+                                                    </Button>
                                                     </td>
                                                 }
                                             </tr>

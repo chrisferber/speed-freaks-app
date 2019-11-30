@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserEvents from '../UserEvents/UserEvents';
+import Button from '@material-ui/core/Button';
 
 class Profile extends Component {
 
@@ -64,13 +65,13 @@ class Profile extends Component {
                         <div>
                             <h3>Active Vehicle:</h3>
                             <p>{this.props.reduxState.vehicleReducer.year} {this.props.reduxState.vehicleReducer.make} {this.props.reduxState.vehicleReducer.model}</p>
-                            <button onClick={this.handleEditButtonClick}>Edit Vehicle</button>
+                            <Button variant="contained" color="primary" onClick={this.handleEditButtonClick}>Edit Vehicle</Button>
                         </div>
                         :
                         <div>
                             <h3>Active Vehicle:</h3>
                             <p>You currently have no active vehicle set. Please add a vehicle to finish setting up your profile. Note, this can be changed at any time.</p>
-                            <button onClick={this.handleAddButtonClick}>Add Vehicle</button>
+                            <Button variant="contained" color="primary" onClick={this.handleAddButtonClick}>Add Vehicle</Button>
                         </div>
                     }
                 </div>
@@ -81,7 +82,9 @@ class Profile extends Component {
                             <p>Make:</p><input onChange={this.handleInputChangeFor('make')} placeholder="eg. 'BMW', 'Audi', 'Porsche'" value={this.state.newVehicle.make}></input>
                             <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder="eg. 'M2', 'R8', 'Cayman GT4'" value={this.state.newVehicle.model}></input>
                             <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder="eg. '1999'" value={this.state.newVehicle.year}></input>
-                            <button onClick={this.postVehicle}>Save Vehicle</button>
+                            <div>
+                            <Button variant="contained" color="primary" onClick={this.postVehicle}>Save Vehicle</Button>
+                            </div>
                         </div>
                     }
                     {this.state.editVehicle &&
@@ -90,7 +93,9 @@ class Profile extends Component {
                             <p>Make:</p><input onChange={this.handleInputChangeFor('make')} placeholder={this.props.reduxState.vehicleReducer.make} value={this.state.newVehicle.make}></input>
                             <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder={this.props.reduxState.vehicleReducer.model} value={this.state.newVehicle.model}></input>
                             <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder={this.props.reduxState.vehicleReducer.year} value={this.state.newVehicle.year}></input>
-                            <button onClick={this.updateVehicle}>Save Vehicle</button>
+                            <div>
+                            <Button variant="contained" color="primary" onClick={this.updateVehicle}>Save Vehicle</Button>
+                            </div>
                         </div>
                     }
                 </div>
