@@ -100,7 +100,7 @@ class Profile extends Component {
                         </div>
                     }
                 </div>
-                {this.props.reduxState.userEvents.user_id ?
+                {this.props.reduxState.userEvents[0] ?
                 <UserEvents />
                 :
                 <div>
