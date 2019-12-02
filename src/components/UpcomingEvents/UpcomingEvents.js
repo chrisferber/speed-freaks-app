@@ -17,7 +17,7 @@ class UpcomingEvents extends Component {
     return (
       <div className="upcoming-events">
         <div className="upcoming-events-header">
-          <h2>Upcoming Events</h2>
+          <h1>Upcoming Events:</h1>
         </div>
         <div className="upcoming-events-map-list">
           {this.props.reduxState.events.map((event) => {

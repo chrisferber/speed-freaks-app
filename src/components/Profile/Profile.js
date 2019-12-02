@@ -56,8 +56,9 @@ class Profile extends Component {
     render() {
         return (
             <>
+                <h1>Profile:</h1>
                 <div className="profile">
-                    <h2>Username: {this.props.reduxState.user.username}</h2>
+                    <p>Username: {this.props.reduxState.user.username}</p>
                     <p>Email: {this.props.reduxState.user.email}</p>
                 </div>
                 <div className="vehicle">
