@@ -28,13 +28,13 @@ import MyEvents from '../MyEvents/MyEvents';
 import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-import blueGrey from '@material-ui/core/colors/blueGrey';
+import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 
 const theme = createMuiTheme({
   palette: {
     primary: deepOrange,
-    secondary: blueGrey,
+    secondary: blue,
     error: red,
     contrastThreshold: 3,
     tonalOffset: 0.2,
@@ -99,7 +99,6 @@ class App extends Component {
               {/* If none of the other routes matched, we will show a 404. */}
               <Route render={() => <h1>404</h1>} />
             </Switch>
-            <Footer />
           </div>
         </Router>
       </MuiThemeProvider>
