@@ -105,10 +105,10 @@ class Profile extends Component {
                 :
                 <div>
                 <h3>My Events</h3>
-                <p>You are not currently registered for any upcoming events.</p>
+                <p>You are not currently registered for any upcoming events. 
+                    You can register for an event if you have a vehicle set on your profile by clicking on the more info button on the Upcoming Events page and then clicking the register button.</p>
                 </div>
     }
-                 
             </>
         );
     }
