@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 
+
 const Nav = (props) => (
   <div className="nav">
     <Link to="/tracks">
