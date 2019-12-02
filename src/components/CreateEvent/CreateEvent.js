@@ -68,7 +68,7 @@ class CreateEvent extends Component {
       )}
     return (
       <>
-        <h1>Create an Event</h1>
+        <h1>Create an Event:</h1>
         <div className="createEventForm">
           <form onSubmit={this.handleSubmit}>
             <div>
