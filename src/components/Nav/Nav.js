@@ -83,10 +83,10 @@ class Nav extends Component {
               ]
             )}
             {this.props.user.is_admin && (
-              <>
-                <Tab key={this.a11yProps(4).id} label="Create Event" component={Link} to="/create-event" />
+              [
+                <Tab key={this.a11yProps(4).id} label="Create Event" component={Link} to="/create-event" />,
                 <Tab key={this.a11yProps(5).id} label="My Events" component={Link} to="/my-events" />
-              </>
+              ]
             )}
             {this.props.user.id &&
               <Tab key={this.a11yProps(6).id} label="Log Out" component={LogOutButton} />
