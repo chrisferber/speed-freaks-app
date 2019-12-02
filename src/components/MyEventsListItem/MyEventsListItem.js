@@ -53,85 +53,11 @@ class MyEventsListItem extends Component {
                     {/* <button onClick={this.handleDetailsButtonClick}>See Event Details</button>
                     <button onClick={() => this.handleEventAttendeesButtonClick(this.props.event.id)}>See Event Attendees</button> */}
                 </div>
-                    <div>
-                        {this.state.toggleAttendees &&
-        <MyEventsAttendingTable />
-    }
-
-                            {/* <div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Username
-                                        </th>
-                                            <th>
-                                                Email
-                                        </th>
-                                            <th>
-                                                Make
-                                        </th>
-                                            <th>
-                                                Model
-                                        </th>
-                                            <th>
-                                                Year
-                                        </th>
-                                            <th>
-                                                Registration Status
-                                        </th>
-                                            <th>
-
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.props.reduxState.attendingEvent.map((user) => {
-                                            return (
-                                                <tr key={user.user_id}>
-                                                    <td>
-                                                        {user.username}
-                                                    </td>
-                                                    <td>
-                                                        {user.email}
-                                                    </td>
-                                                    <td>
-                                                        {user.make}
-                                                    </td>
-                                                    <td>
-                                                        {user.model}
-                                                    </td>
-                                                    <td>
-                                                        {user.year}
-                                                    </td>
-                                                    {user.registration_complete ?
-                                                        <td>
-                                                            Complete
-                                                </td> :
-                                                        <td>
-                                                            Pending
-                                                </td>
-                                                    }
-                                                    {user.registration_complete ?
-                                                        <td>
-                                                            <Button color="primary" onClick={() => this.markRegistrationIncomplete(user)}>
-                                                                Mark Registration Incomplete
-                                                    </Button>
-                                                        </td> :
-                                                        <td>
-                                                            <Button color="primary" onClick={() => this.markCompletelyRegistered(user)}>
-                                                                Mark as Registered
-                                                    </Button>
-                                                        </td>
-                                                    }
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div> */}
-                        
-                    </div>
+                <div>
+                    {this.state.toggleAttendees &&
+                        <MyEventsAttendingTable />
+                    }
+                </div>
             </>
         );
     }
