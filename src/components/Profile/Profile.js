@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserEvents from '../UserEvents/UserEvents';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 class Profile extends Component {
 
@@ -55,7 +56,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <>
+            <Box m={5}>
                 <h1>Profile:</h1>
                 <div className="profile">
                     <p>Username: {this.props.reduxState.user.username}</p>
@@ -84,7 +85,7 @@ class Profile extends Component {
                             <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder="eg. 'M2', 'R8', 'Cayman GT4'" value={this.state.newVehicle.model}></input>
                             <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder="eg. '1999'" value={this.state.newVehicle.year}></input>
                             <div>
-                            <Button variant="contained" color="primary" onClick={this.postVehicle}>Save Vehicle</Button>
+                                <Button variant="contained" color="primary" onClick={this.postVehicle}>Save Vehicle</Button>
                             </div>
                         </div>
                     }
@@ -95,21 +96,21 @@ class Profile extends Component {
                             <p>Model:</p><input onChange={this.handleInputChangeFor('model')} placeholder={this.props.reduxState.vehicleReducer.model} value={this.state.newVehicle.model}></input>
                             <p>Year:</p><input onChange={this.handleInputChangeFor('year')} placeholder={this.props.reduxState.vehicleReducer.year} value={this.state.newVehicle.year}></input>
                             <div>
-                            <Button variant="contained" color="primary" onClick={this.updateVehicle}>Save Vehicle</Button>
+                                <Button variant="contained" color="primary" onClick={this.updateVehicle}>Save Vehicle</Button>
                             </div>
                         </div>
                     }
                 </div>
                 {this.props.reduxState.userEvents[0] ?
-                <UserEvents />
-                :
-                <div>
-                <h3>My Events</h3>
-                <p>You are not currently registered for any upcoming events. 
+                    <UserEvents />
+                    :
+                    <div>
+                        <h3>My Events</h3>
+                        <p>You are not currently registered for any upcoming events.
                     You can register for an event if you have a vehicle set on your profile by clicking on the more info button on the Upcoming Events page and then clicking the register button.</p>
-                </div>
-    }
-            </>
+                    </div>
+                }
+            </Box>
         );
     }
 }

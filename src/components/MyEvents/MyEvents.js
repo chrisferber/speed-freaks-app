@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MyEventsListItem from '../MyEventsListItem/MyEventsListItem';
+import Box from '@material-ui/core/Box';
+
 
 class MyEvents extends Component {
 
@@ -15,18 +17,20 @@ class MyEvents extends Component {
     render() {
 
         return (
-            <div className="EventDetails">
-                <h1>
-                    My Events:
+            <Box m={5}>
+                <div className="EventDetails">
+                    <h1>
+                        My Events:
                 </h1>
-                {this.props.reduxState.organizerDataReducer.map((event) => {
-                    return(
-                    <MyEventsListItem key={event.id} event={event} />
-                    );
-                })
+                    {this.props.reduxState.organizerDataReducer.map((event) => {
+                        return (
+                            <MyEventsListItem key={event.id} event={event} />
+                        );
+                    })
 
-                }
-            </div>
+                    }
+                </div>
+            </Box>
         );
     }
 }

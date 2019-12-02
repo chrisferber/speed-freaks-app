@@ -25,7 +25,7 @@ import EventDetails from '../EventDetails/EventDetails';
 import Profile from '../Profile/Profile';
 import MyEvents from '../MyEvents/MyEvents';
 
-import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import blue from '@material-ui/core/colors/blue';
