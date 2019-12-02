@@ -62,7 +62,7 @@ class Profile extends Component {
                     <p>Email: {this.props.reduxState.user.email}</p>
                 </div>
                 <div className="vehicle">
-                    {this.props.reduxState.vehicleReducer ?
+                    {this.props.reduxState.vehicleReducer.id ?
                         <div>
                             <h3>Active Vehicle:</h3>
                             <p>{this.props.reduxState.vehicleReducer.year} {this.props.reduxState.vehicleReducer.make} {this.props.reduxState.vehicleReducer.model}</p>
@@ -100,7 +100,7 @@ class Profile extends Component {
                         </div>
                     }
                 </div>
-                {this.props.reduxState.userEvents ?
+                {this.props.reduxState.userEvents.user_id ?
                 <UserEvents />
                 :
                 <div>

@@ -5,7 +5,7 @@ function* updateVehicle(action) {
     try {
         const response = yield axios.put('/api/vehicle/edit', action.payload);
         console.log('response from PUT route in updateVehicle:', response);
-        yield put({ type: 'SET_USER_VEHICLE', payload: response.data });
+        yield put({ type: 'SET_USER_VEHICLE', payload: response.data[0] });
     } catch (error) {
         console.log('error in postNewVehicleSaga, postVehicle request failed with error:', error);
     }

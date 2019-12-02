@@ -55,7 +55,7 @@ class MyEventsAttendingTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.reduxState.attendingEvent.map(user => (
+                        {this.props.reduxState.attendingEvent.map((user) => (
                             <TableRow key={user.user_id}>
                                 <TableCell component="th" scope="user">
                                     {user.username}
