@@ -1,32 +1,7 @@
 import React, { Component } from 'react';
-import ReactS3Uploader from 'react-s3-uploader';
 import axios from 'axios';
  
 class ImageUpload extends Component {
- 
-//   handleFinishedUpload = info => {
-//     console.log('File uploaded with filename', info.filename)
-//     console.log('Access it on s3 at', info.fileUrl)
-//   }
- 
-//   render() {
-//     const uploadOptions = {
-//       server: 'http://localhost:5000',
-//       signingUrlQueryParams: {uploadType: 'avatar'},
-//     }
-//     const s3Url = 'https://prime-example.s3.amazonaws.com'
- 
-//     return (
-//       <ReactS3Uploader
-//         onFinish={this.handleFinishedUpload}
-//         s3Url={s3Url}
-//         maxSize={1024 * 1024 * 5}
-//         upload={uploadOptions}
-//       />
-//     )
-//   }
-// }
-
 
 constructor(props){
     super(props);
@@ -95,7 +70,6 @@ console.log("About to axios.put, options=", options);
     const SuccessMessage = () => (
       <div style={{padding:50}}>
         <h3 style={{color: 'green'}}>SUCCESSFUL UPLOAD</h3>
-        {/* <a href={this.state.url}>Access the file here</a> */}
         <br/>
       </div>
     )

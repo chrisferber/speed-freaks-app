@@ -29,7 +29,7 @@ class UpcomingEventsList extends Component {
             <>
                 <h2>{this.props.event.event_name}</h2>
                 {this.props.event.image_url &&
-                <img src={this.props.event.image_url} height="300px" />
+                <img src={this.props.event.image_url} alt="Event" height="300px" />
     }
                 <p>{moment(this.props.event.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.event.event_date_end).format('MM/DD/YYYY')}</p>
                 <p>{this.props.event.upcoming_description}</p>
