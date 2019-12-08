@@ -1,67 +1,57 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "event"`;
 
     pool.query(queryText)
-        .then((result) => { res.send(result.rows) })
-        .catch((error) => {
-            console.log('error in events.router.js in making GET request', error);
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch(() => {
             res.sendStatus(500);
         })
-});
+})
 
-router.get('/my-registered', (req, res) => {
+router.get('/my-registered', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT "event_name", "event_date_start", "event_date_end", "user_id", "event_id", "registration_complete" FROM "event"
     JOIN "user_event" ON "user_event"."event_id" = "event"."id"
     WHERE "user_id" = $1`;
 
-    // const queryText = `SELECT "user"."username", "user"."email", "user_event"."user_id", "user_event"."event_id", "user_event"."registration_complete", "make", "model", "year" FROM "user"
-    // INNER JOIN "user_event" ON "user_event"."user_id" = "user"."id"
-    // INNER JOIN "vehicle" ON "vehicle"."user_id" = "user"."id"
-    // WHERE "user_event"."user_id" = $1
-    // ORDER BY "user_event"."event_id"`;
-
     pool.query(queryText, [req.user.id])
-    .then((result) => {
-        console.log('result for get request to /my-registered:', result.rows);
-        res.send(result.rows);
-    })
-    .catch((error) => {
-        console.log('error in get request to /my-registered, error:', error);
-        res.sendStatus(500);
-    })
+        .then((result) => {
+            res.send(result.rows);
+        })
+        .catch(() => {
+            res.sendStatus(500);
+        })
 })
 
 
-router.post('/register', (req, res) => {
+router.post('/register', rejectUnauthenticated, (req, res) => {
     const queryText = `INSERT INTO "user_event" ("user_id", "event_id")
     VALUES ($1, $2)`;
-    console.log('router.post for register for event, user id is:', req.user);
-    console.log('router.post for register for event, req.body is:', req.body);
+
     const queryValues = [
         req.user.id,
         req.body.id,
     ];
+
     pool.query(queryText, queryValues)
         .then(() => {
             res.sendStatus(200);
         })
-        .catch((error) => {
-            console.log('error in router.post in events.router.js to register for an event, ', error);
+        .catch(() => {
             res.sendStatus(500);
         });
-
-
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', rejectUnauthenticated, (req, res) => {
     const queryText = `INSERT INTO "event" ("event_name", "event_date_start", "event_date_end", "upcoming_description", "details_description", "admin_contact", "created_id", "image_url")
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
-    console.log('router.post for create event, user id is:', req.user);
-    console.log('router.post for create event, req.body is:', req.body);
+
     const queryValues = [
         req.body.eventTitle,
         req.body.eventStartDate,
@@ -72,24 +62,34 @@ router.post('/create', (req, res) => {
         req.user.id,
         req.body.imageUrl,
     ];
-    pool.query(queryText, queryValues)
-        .then(() => {
-            res.sendStatus(200);
-        })
-        .catch((error) => {
-            console.log('error in router.post in events.router.js to create an event,', error);
-            res.sendStatus(500);
-        })
+
+    if (req.user.is_admin === true) {
+        pool.query(queryText, queryValues)
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch(() => {
+                res.sendStatus(500);
+            })
+    } else {
+        res.send(403);
+    }
 })
 
-router.put('/edit/:id', (req, res) => {
-    pool.query(`SELECT * from "event"
-    WHERE "id" = $1`, [req.params.id])
-        .then((result) => {
+router.put('/edit/:id', rejectUnauthenticated, async (req, res) => {
 
-            const admin = result.rows[0].created_id;
-            if (admin === req.user.id) {
-                const queryText = `UPDATE "event"
+    const connection = await pool.connect();
+    let result;
+
+    try {
+        await connection.query('BEGIN;');
+
+        result = await connection.query(`SELECT * from "event" WHERE "id" = $1`, [req.params.id]);
+
+        const admin = result.rows[0].created_id;
+
+        if (admin === req.user.id) {
+            const queryText = `UPDATE "event"
                 SET "event_name" = $1,
                 "event_date_start" = $2,
                 "event_date_end" = $3,
@@ -99,52 +99,56 @@ router.put('/edit/:id', (req, res) => {
                 WHERE "id" = $7
                 RETURNING *`;
 
-                const queryValues = [
-                    req.body.eventTitle,
-                    req.body.eventStartDate,
-                    req.body.eventEndDate,
-                    req.body.upcomingDescription,
-                    req.body.detailsDescription,
-                    req.body.organizerContact,
-                    req.params.id,
-                ];
-                pool.query(queryText, queryValues)
-                .then((result) => {
-                    res.send(result.rows);
-                })
-                .catch((error) => {
-                    console.log('error making put request to edit event in events.router.js with:', error);
-                    res.sendStatus(500);
-                })
-            } else {
-                console.log('user is not authorized to edit this event. /edit/:id in events.router.js');
-                res.sendStatus(500);
-            }
-        })
-})
+            const queryValues = [
+                req.body.eventTitle,
+                req.body.eventStartDate,
+                req.body.eventEndDate,
+                req.body.upcomingDescription,
+                req.body.detailsDescription,
+                req.body.organizerContact,
+                req.params.id,
+            ];
 
-router.delete('/delete/:id', (req, res) => {
-    pool.query(`SELECT * FROM "event" WHERE "id" = $1`, [req.params.id])
-    .then((result) => {
-        const admin = result.rows[0].created_id;
-        if (admin === req.user.id) {
-            pool.query(`DELETE FROM "user_event" WHERE "event_id" = $1`, [req.params.id])
-            .then(() => {
-                pool.query(`DELETE FROM "event" WHERE "id" = $1`, [req.params.id])
-            })
-            .then(() => {
-                res.sendStatus(200);
-            })
-            .catch((error) => {
-                console.log('delete event in events.router.js failed with:', error);
-                res.sendStatus(500);
-            })
+            result = await connection.query(queryText, queryValues);
+
+            await connection.query(`COMMIT;`);
+
+            res.send(result.rows);
         } else {
-            console.log('user is not authorized to delete this event. /delete/:id in events.router.js');
-            res.sendStatus(500);
+            res.sendStatus(403);
         }
-    })
+    } catch (error) {
+        await connection.query(`ROLLBACK;`);
+
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
 })
 
+router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+    const connection = await pool.connect();
+    let result;
+
+    try {
+        result = await connection.query(`SELECT * FROM "event" WHERE "id" = $1`, [req.params.id]);
+
+        const admin = result.rows[0].created_id;
+
+        if (admin === req.user.id) {
+            await connection.query(`DELETE FROM "user_event" WHERE "event_id" = $1`, [req.params.id]);
+
+            await connection.query(`DELETE FROM "event" WHERE "id" = $1`, [req.params.id]);
+
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(403);
+        }
+    } catch (error) {
+        await connection.query(`ROLLBACK;`);
+
+        res.sendStatus(500);
+    }
+})
 
 module.exports = router;

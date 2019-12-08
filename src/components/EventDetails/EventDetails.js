@@ -109,7 +109,6 @@ class EventDetails extends Component {
           }
         </div>
       </Box>
-
     );
   }
 }
