@@ -6,17 +6,15 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
+    const noUserVehicle = {
+        vehicle: null,
+    };
     const queryText = `SELECT * FROM "vehicle"
     WHERE "user_id" = $1`;
 
     pool.query(queryText, [ req.user.id ] )
         .then((result) => { 
-            if (result.rows === undefined) {
-                console.log('result.rows of GET to api/vehicle is undefined');
-                res.sendStatus(200);
-            } else {
-                res.send(result.rows);
-            }
+            res.send(result.rows);
         })
         .catch((error) => {
             console.log('error in vehicle.router.js in making GET request', error);

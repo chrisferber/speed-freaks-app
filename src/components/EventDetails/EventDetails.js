@@ -16,22 +16,34 @@ class EventDetails extends Component {
     toUpcomingEvents: false,
   }
 
+  componentDidMount() {
+    this.fetchUserVehicle();
+  }
+
+  fetchUserVehicle = () => {
+    this.props.dispatch({ type: 'FETCH_VEHICLE' });
+  }
+
   registerForEvent = () => {
-    this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent })
+    if (this.props.reduxState.vehicleReducer.id) {
+      this.props.dispatch({ type: 'EVENT_REGISTER', payload: this.props.reduxState.currentEvent });
+    } else {
+      alert('To register for an event your profile must have an active vehicle set. You can add a vehicle to your profile in the Profile page.');
+    }
   }
 
   handleEditEventButtonClick = () => {
     this.setState({
       toggleEditEvent: !this.state.toggleEditEvent
-    })
+    });
   }
 
   handleDeleteEventButtonClick = () => {
     console.log('delete event button was clicked in EventDetails.js');
-    this.props.dispatch({ type: 'DELETE_EVENT', payload: this.props.reduxState.currentEvent })
+    this.props.dispatch({ type: 'DELETE_EVENT', payload: this.props.reduxState.currentEvent });
     this.setState({
       toUpcomingEvents: true,
-    })
+    });
   }
 
   render() {
@@ -90,7 +102,7 @@ class EventDetails extends Component {
               );
             } else {
               return (
-                <p></p>
+                <p key={registration.event_id}></p>
               );
             }
           })
