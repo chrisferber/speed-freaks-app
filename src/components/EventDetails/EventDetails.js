@@ -38,7 +38,7 @@ class EventDetails extends Component {
     if (this.state.toUpcomingEvents === true) {
       return <Redirect to='/upcoming-events' />
     } else if (!this.props.reduxState.currentEvent.event_name) {
-      return <Redirect to='upcoming-events' />
+      return <Redirect to='/upcoming-events' />
     }
     return (
       <Box m={5}>
@@ -47,7 +47,7 @@ class EventDetails extends Component {
             {this.props.reduxState.currentEvent.event_name}
           </h2>
           {this.props.reduxState.currentEvent.image_url &&
-            <img src={this.props.reduxState.currentEvent.image_url} height="300px" />
+            <img src={this.props.reduxState.currentEvent.image_url} alt="Event" height="300px" />
           }
           <p>{moment(this.props.reduxState.currentEvent.event_date_start).format('MM/DD/YYYY')}   -   {moment(this.props.reduxState.currentEvent.event_date_end).format('MM/DD/YYYY')}</p>
           <p>{this.props.reduxState.currentEvent.details_description}</p>
@@ -88,12 +88,15 @@ class EventDetails extends Component {
                   }
                 </div>
               );
+            } else {
+              return (
+                <p></p>
+              );
             }
           })
-
           }
         </div>
-        </Box>
+      </Box>
 
     );
   }

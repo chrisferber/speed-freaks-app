@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -16,7 +15,6 @@ class Nav extends Component {
 
   state = {
     value: 0,
-
   };
 
   handleChange = (event, newValue) => {
@@ -41,12 +39,6 @@ class Nav extends Component {
       </Typography>
     );
   };
-
-  // TabPanel.propTypes = {
-  //   children: PropTypes.node,
-  //   index: PropTypes.any.isRequired,
-  //   value: PropTypes.any.isRequired,
-  // };
 
   a11yProps = (index) => {
     return {

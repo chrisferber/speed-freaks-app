@@ -4,7 +4,6 @@ import loginMode from './loginModeReducer';
 import user from './userReducer';
 import events from './eventsReducer';
 import currentEvent from './currentEventReducer';
-import registerForEventReducer from './registerForEventReducer';
 import vehicleReducer from './vehicleReducer';
 import organizerDataReducer from './organizerDataReducer';
 import attendingEvent from './eventAttendeesReducer';

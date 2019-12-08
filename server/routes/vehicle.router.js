@@ -9,11 +9,14 @@ router.get('/', (req, res) => {
     const queryText = `SELECT * FROM "vehicle"
     WHERE "user_id" = $1`;
 
-    const queryValues = [ req.user.id ];
-
-    pool.query(queryText, queryValues)
+    pool.query(queryText, [ req.user.id ] )
         .then((result) => { 
-            res.send(result.rows) 
+            if (result.rows === undefined) {
+                console.log('result.rows of GET to api/vehicle is undefined');
+                res.sendStatus(200);
+            } else {
+                res.send(result.rows);
+            }
         })
         .catch((error) => {
             console.log('error in vehicle.router.js in making GET request', error);
