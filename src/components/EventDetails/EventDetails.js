@@ -6,6 +6,8 @@ import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Box from '@material-ui/core/Box';
+
 
 class EventDetails extends Component {
 
@@ -39,7 +41,7 @@ class EventDetails extends Component {
       return <Redirect to='upcoming-events' />
     }
     return (
-      <>
+      <Box m={5}>
         <div className="EventDetails">
           <h2>
             {this.props.reduxState.currentEvent.event_name}
@@ -91,7 +93,7 @@ class EventDetails extends Component {
 
           }
         </div>
-      </>
+        </Box>
 
     );
   }

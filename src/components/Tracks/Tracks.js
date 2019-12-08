@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Box from '@material-ui/core/Box';
+
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -7,6 +9,7 @@ import { connect } from 'react-redux';
 class Tracks extends Component {
   render() {
     return (
+      <Box m={5}>
       <div>
         <div>
           <h1>Brainerd International Raceway</h1>
@@ -50,6 +53,7 @@ class Tracks extends Component {
           </p>
         </div>
       </div>
+      </Box>
     )
   }
 }

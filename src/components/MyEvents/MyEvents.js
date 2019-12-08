@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MyEventsListItem from '../MyEventsListItem/MyEventsListItem';
+import Box from '@material-ui/core/Box';
+
 
 class MyEvents extends Component {
 
@@ -15,6 +17,7 @@ class MyEvents extends Component {
     render() {
 
         return (
+            <Box m={5}>
             <div className="EventDetails">
                 <h1>
                     My Events:
@@ -27,6 +30,7 @@ class MyEvents extends Component {
 
                 }
             </div>
+            </Box>
         );
     }
 }

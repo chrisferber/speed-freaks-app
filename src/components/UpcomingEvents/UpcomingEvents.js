@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UpcomingEventsList from '../UpcomingEventsList/UpcomingEventsList';
+import Box from '@material-ui/core/Box';
 
 
 class UpcomingEvents extends Component {
@@ -15,6 +16,7 @@ class UpcomingEvents extends Component {
 
   render() {
     return (
+      <Box m={5}>
       <div className="upcoming-events">
         <div className="upcoming-events-header">
           <h1>Upcoming Events:</h1>
@@ -27,6 +29,7 @@ class UpcomingEvents extends Component {
           })}
         </div>
       </div>
+      </Box>
     );
   }
 }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserEvents from '../UserEvents/UserEvents';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
 
 class Profile extends Component {
 
@@ -55,7 +57,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <>
+            <Box m={5}>
                 <h1>Profile:</h1>
                 <div className="profile">
                     <p>Username: {this.props.reduxState.user.username}</p>
@@ -109,7 +111,7 @@ class Profile extends Component {
                 </div>
     }
                  
-            </>
+                 </Box>
         );
     }
 }
