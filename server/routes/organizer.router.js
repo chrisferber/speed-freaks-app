@@ -63,10 +63,11 @@ router.put('/complete-registration', rejectUnauthenticated, async (req, res) => 
         const admin = result.rows[0].created_id;
         if (admin === req.user.id) {
             const queryText = `UPDATE "user_event"
-            SET "registration_complete" = true
-            WHERE "user_id" = $1
-            AND "event_id" = $2`;
+            SET "registration_complete" = $1
+            WHERE "user_id" = $2
+            AND "event_id" = $3`;
             const queryValues = [
+                !req.body.registration_complete,
                 req.body.user_id,
                 req.body.event_id
             ];
@@ -87,33 +88,5 @@ router.put('/complete-registration', rejectUnauthenticated, async (req, res) => 
         connection.release();
     }
 })
-
-router.put('/registration-incomplete', rejectUnauthenticated, (req, res) => {
-    pool.query(`SELECT * FROM "event" WHERE "id" = $1`, [req.body.event_id])
-        .then((result) => {
-            const admin = result.rows[0].created_id;
-            if (admin === req.user.id) {
-                const queryText = `UPDATE "user_event"
-            SET "registration_complete" = false
-            WHERE "user_id" = $1
-            AND "event_id" = $2`;
-                const queryValues = [
-                    req.body.user_id,
-                    req.body.event_id
-                ];
-                pool.query(queryText, queryValues)
-                    .then(() => {
-                        res.send([req.body.event_id]);
-                    })
-                    .catch((error) => {
-                        console.log('put request to /complete-registration in organizer.router.js failed with:', error);
-                        res.sendStatus(500);
-                    })
-            } else {
-                console.log('user is not authorized to post to /registration-incomplete for this user or event');
-            }
-        })
-})
-
 
 module.exports = router;

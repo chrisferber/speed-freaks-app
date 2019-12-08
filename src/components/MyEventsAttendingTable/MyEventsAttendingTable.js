@@ -7,12 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
-
-// function createData(username, email, make, model, year, registration) {
-//     return { username, email, make, model, year, registration };
-// };
+import Paper from '@material-ui/core/Paper'; 
 
 class MyEventsAttendingTable extends Component {
 
@@ -28,18 +23,11 @@ class MyEventsAttendingTable extends Component {
         });
     }
 
-    markCompletelyRegistered = (user) => {
-        console.log('mark as registered button clicked with user Id:', user);
-        this.props.dispatch({ type: 'COMPLETE_REGISTRATION', payload: user });
-    }
-
-    markRegistrationIncomplete = (user) => {
-        console.log('mark registration incomplete button clicked with user Id:', user);
-        this.props.dispatch({ type: 'MARK_REGISTRATION_INCOMPLETE', payload: user });
+    toggleRegistrationStatus = (user) => {
+        this.props.dispatch({ type: 'TOGGLE_REGISTRATION_STATUS', payload: user });
     }
 
     render() {
-        // const classes = useStyles();
         return (
             <Paper className={this.useStyles.root}>
                 <Table className={this.useStyles.table} aria-label="simple table">
@@ -74,12 +62,12 @@ class MyEventsAttendingTable extends Component {
                             }
                                 {user.registration_complete ?
                                     <TableCell align="right">
-                                        <Button color="primary" onClick={() => this.markRegistrationIncomplete(user)}>
+                                        <Button color="primary" onClick={() => this.toggleRegistrationStatus(user)}>
                                             Mark Registration Incomplete
                                         </Button>
                                     </TableCell> :
                                     <TableCell align="right">
-                                        <Button color="primary" onClick={() => this.markCompletelyRegistered(user)}>
+                                        <Button color="primary" onClick={() => this.toggleRegistrationStatus(user)}>
                                             Mark as Registered
                                         </Button>
                                     </TableCell>
