@@ -63,6 +63,7 @@ router.put('/edit', rejectUnauthenticated, (req, res) => {
             res.send(result.rows)
         })
         .catch(() => {
+            res.sendStatus(500);
         })
 });
 

@@ -86,9 +86,7 @@ router.put('/edit/:id', rejectUnauthenticated, async (req, res) => {
 
         result = await connection.query(`SELECT * from "event" WHERE "id" = $1`, [req.params.id]);
 
-        const admin = result.rows[0].created_id;
-
-        if (admin === req.user.id) {
+        if (result.rows[0].created_id === req.user.id) {
             const queryText = `UPDATE "event"
                 SET "event_name" = $1,
                 "event_date_start" = $2,
@@ -131,14 +129,16 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
     let result;
 
     try {
+        await connection.query('BEGIN;');
+        
         result = await connection.query(`SELECT * FROM "event" WHERE "id" = $1`, [req.params.id]);
 
-        const admin = result.rows[0].created_id;
-
-        if (admin === req.user.id) {
+        if (result.rows[0].created_id === req.user.id) {
             await connection.query(`DELETE FROM "user_event" WHERE "event_id" = $1`, [req.params.id]);
 
             await connection.query(`DELETE FROM "event" WHERE "id" = $1`, [req.params.id]);
+
+            await connection.query(`COMMIT;`);
 
             res.sendStatus(200);
         } else {
@@ -148,6 +148,8 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
         await connection.query(`ROLLBACK;`);
 
         res.sendStatus(500);
+    } finally {
+        connection.release();
     }
 })
 
