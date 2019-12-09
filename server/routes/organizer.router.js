@@ -1,9 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware'); // Send user a 403 status if they are not logged in
 
-
+// HTTP request for a user to fetch all events from 'event' table that they have created
 router.get('/', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "event"
     WHERE "created_id" = $1`;
@@ -17,8 +17,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         .catch(() => {
             res.sendStatus(500);
         })
-});
+}) // End fetch my created events HTTP request
 
+// HTTP request for a user to fetch all users registered for one of their created events
 router.get('/attending/:id', rejectUnauthenticated, async (req, res) => {
     const connection = await pool.connect();
     let result;
@@ -32,7 +33,7 @@ router.get('/attending/:id', rejectUnauthenticated, async (req, res) => {
         INNER JOIN "vehicle" ON "vehicle"."user_id" = "user"."id"
         WHERE "user_event"."event_id" = $1
         ORDER BY "user"."id"`;
-
+        // Verifies user is the creator of the event
         if (result.rows[0].created_id === req.user.id) {
             result = await connection.query(queryText, [req.params.id]);
 
@@ -49,8 +50,9 @@ router.get('/attending/:id', rejectUnauthenticated, async (req, res) => {
     } finally {
         connection.release();
     }
-});
+}) // End fetch users attending my events HTTP request
 
+// HTTP request for an event organizer to toggle the registration status of any user registered for one of their events
 router.put('/complete-registration', rejectUnauthenticated, async (req, res) => {
     const connection = await pool.connect();
     let result;
@@ -59,7 +61,7 @@ router.put('/complete-registration', rejectUnauthenticated, async (req, res) => 
         await connection.query('BEGIN;');
 
         result = await connection.query(`SELECT * from "event" WHERE "id" = $1`, [req.body.event_id]);
-
+        // Verifies user is the creator of the event
         const admin = result.rows[0].created_id;
         if (admin === req.user.id) {
             const queryText = `UPDATE "user_event"
@@ -87,6 +89,6 @@ router.put('/complete-registration', rejectUnauthenticated, async (req, res) => 
     } finally {
         connection.release();
     }
-})
+}) // End toggle attenddee registration status HTTP request
 
 module.exports = router;

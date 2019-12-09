@@ -1,3 +1,4 @@
+// stores the events that the specific user is registered for
 const userEventsReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_USER_EVENTS':

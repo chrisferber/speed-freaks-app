@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'; // Material UI styled buttons
 
+// This component is rendered if the user is not logged in and loginMode reducer = "register"
+// Allows a user to create an account to access the application
 class RegisterPage extends Component {
   state = {
     username: '',
@@ -9,6 +11,7 @@ class RegisterPage extends Component {
     email: '',
   };
 
+  // Function that dispatches to registrationSaga.js to create new row in user table in database if no input fields are null
   registerUser = (event) => {
     event.preventDefault();
 
@@ -24,17 +27,19 @@ class RegisterPage extends Component {
     } else {
       this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
     }
-  } // end registerUser
+  } // end registerUser function
 
+  // Function that is called onChange of input field to capture user inputs and store them in local state
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
-  }
+  } // End handleInputChangeFor function
 
   render() {
     return (
       <div>
+        {/* conditionally renders error message if errors.registrationMessage reducer is not null */}
         {this.props.errors.registrationMessage && (
           <h2
             className="alert"
@@ -90,6 +95,7 @@ class RegisterPage extends Component {
           </div>
         </form>
         <center>
+          {/* renders LoginPage on Login button click */}
           <button
             type="button"
             className="link-button"
@@ -101,14 +107,11 @@ class RegisterPage extends Component {
       </div>
     );
   }
-}
+} // End RegisterPage component
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
+// Provides access of errors reducer to component through props
 const mapStateToProps = state => ({
   errors: state.errors,
 });
 
 export default connect(mapStateToProps)(RegisterPage);
-

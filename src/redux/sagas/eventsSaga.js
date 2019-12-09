@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// worker Saga: will be fired on 'FETCH_EVENTS' actions
 function* fetchEvents() {
     try {
         const response = yield axios.get('/api/events');
@@ -10,6 +11,7 @@ function* fetchEvents() {
     }
 }
 
+// worker Saga: will be fired on 'CREATE_EVENT' actions
 function* postEvent(action) {
     try {
         yield axios.post('/api/events/create', action.payload );
@@ -19,6 +21,7 @@ function* postEvent(action) {
     }
 }
 
+// worker Saga: will be fired on 'EDIT_EVENT' actions
 function* editEvent(action) {
     try{
         const response = yield axios.put(`/api/events/edit/${action.payload.eventId}`, action.payload);
@@ -28,16 +31,15 @@ function* editEvent(action) {
     }
 }
 
+// worker Saga: will be fired on 'DELETE_EVENT' actions
 function* deleteEvent(action) {
     try{
         yield axios.delete(`/api/events/delete/${action.payload.id}`);
         yield put({ type: 'FETCH_EVENTS' });
-        // yield put({ type: 'SET_CURRENT_EVENT' });
     } catch (error) {
         console.log('error in deleteEvent deletEvent in eventsSaga.js with:', error);
     }
 }
-
 
 function* eventsSaga() {
     yield takeLatest('FETCH_EVENTS', fetchEvents);

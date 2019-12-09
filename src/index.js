@@ -1,20 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux'; // imports redux to create redux store
+import { Provider } from 'react-redux'; // Wrapper around App component to give all child components access to redux store
 import createSagaMiddleware from 'redux-saga';
-import logger from 'redux-logger';
+import logger from 'redux-logger'; // Saga middleware that logs redux state updates to console
 
 import rootReducer from './redux/reducers'; // imports ./redux/reducers/index.js
 import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
 
-import App from './components/App/App';
+import App from './components/App/App'; // Root component to render
 
 const sagaMiddleware = createSagaMiddleware();
 
-// this line creates an array of all of redux middleware you want to use
-// we don't want a whole ton of console logs in our production code
-// logger will only be added to your project if your in development mode
+// logger will only be added to project if in development mode to avoid large amount of console.log's in production code
 const middlewareList = process.env.NODE_ENV === 'development' ?
   [sagaMiddleware, logger] :
   [sagaMiddleware];
@@ -28,7 +26,7 @@ const store = createStore(
 );
 
 // tells the saga middleware to use the rootSaga
-// rootSaga contains all of our other sagas
+// rootSaga contains all other sagas
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(

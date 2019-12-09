@@ -2,27 +2,33 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
+// imports Material UI components needed for styled nav bar
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+// imports Material UI components needed for font and spacing
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-// import './Nav.css';
+// import './Nav.css'; Due to using Material UI for styling Nav.css is not currently included in application
 
-
+// This component is rendered in parent App component to be available on every page
+// Provides tabs that a user can interact with to navigate through the application
 class Nav extends Component {
 
+  // this.state.value is needed by Material UI nav bar to show selector beneath currently selected tab/page
   state = {
     value: 0,
   };
 
+  // Function that sets local state to currently selected tab, called onClick of a tab
   handleChange = (event, newValue) => {
     this.setState({
       value: newValue,
     });
-  };
+  } // End handleChange function
 
+  // Material UI component for styled nav bar
   TabPanel = (props) => {
     const { children, value, index, ...other } = props;
 
@@ -38,15 +44,17 @@ class Nav extends Component {
         <Box p={6}>{children}</Box>
       </Typography>
     );
-  };
+  } // End TabPanel function
 
+  // Another component imported from Material UI for styled nav bar
   a11yProps = (index) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
     };
-  };
+  } // End a11yProps function
 
+  // Sets basic style with makeStyles Material UI method needed for styled nav bar
   useStyles = () => {
     makeStyles(theme => ({
       root: {
@@ -54,7 +62,7 @@ class Nav extends Component {
         backgroundColor: theme.palette.background.paper,
       },
     }));
-  };
+  } // End useStyles function
 
   render() {
     return (
@@ -88,13 +96,9 @@ class Nav extends Component {
       </div >
     )
   }
-}
+} // End Nav component
 
-// Instead of taking everything from state, we just want the user
-// object to determine if they are logged in
-// if they are logged in, we show them a few more links 
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({ user }) => ({ user });
+// Provides component with access to reduxState.user through props
 const mapStateToProps = state => ({
   user: state.user,
 });

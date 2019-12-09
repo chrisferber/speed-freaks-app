@@ -11,13 +11,7 @@ import organizerDataSaga from './organizerDataSaga';
 import fetchRegisteredSaga from './fetchRegisteredSaga';
 import userProfileSaga from './userProfileSaga';
 
-// rootSaga is the primary saga.
-// It bundles up all of the other sagas so our project can use them.
-// This is imported in index.js as rootSaga
-
-// some sagas trigger other sagas, as an example
-// the registration triggers a login
-// and login triggers setting the user
+// combines all sagas into a single rootSaga, rootSaga imports into /src root index.js
 export default function* rootSaga() {
   yield all([
     loginSaga(),

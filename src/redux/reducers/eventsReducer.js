@@ -1,3 +1,4 @@
+// stores all data from event table in database
 const eventsReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_EVENTS':
