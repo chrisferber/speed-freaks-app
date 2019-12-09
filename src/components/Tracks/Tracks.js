@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'; // Material UI component used for spacing
 
-
-// this could also be written with destructuring parameters as:
-// const UserPage = ({ user }) => (
-// and then instead of `props.user.username` you could use `user.username`
+// This component will be rendered when a user navigates to / or /tracks if they are logged in, landing page for the application
+// Tracks is a static component that introduces users to Brainerd International Raceway and the application usage if they are not already familiar
 class Tracks extends Component {
   render() {
     return (
@@ -20,7 +18,6 @@ class Tracks extends Component {
           <p>
             Brainerd International Raceway is a road coarse, and dragstrip racing complex northwest of the city of Brainerd, Minnesota.
             The complex has a 0.25-mile dragstrip, and overlapping 2.5-mile and 3.1-mile road courses. The complex also includes a cart track.
-
           </p>
         </div>
         <div>
@@ -56,14 +53,12 @@ class Tracks extends Component {
       </Box>
     )
   }
-}
+} // End Tracks component
 
-// Instead of taking everything from state, we just want the user info.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({user}) => ({ user });
+// Provides access to user reducer in component through props
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-// this allows us to use <App /> in index.js
+// this allows the use of <App /> in index.js
 export default connect(mapStateToProps)(Tracks);

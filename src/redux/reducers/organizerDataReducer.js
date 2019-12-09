@@ -1,4 +1,4 @@
-
+// stores events created by the specific user
 const organizerDataReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_ORGANIZER_EVENTS':

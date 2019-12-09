@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+// Component that is rendered in EventDetails component to edit an event, only accessible to creator of event
 class EditCreatedEvent extends Component {
 
+    // Local state will start with current values for event and show them in input fields of form
     state = {
         eventId: this.props.reduxState.currentEvent.id,
         eventTitle: this.props.reduxState.currentEvent.event_name,
@@ -13,9 +15,10 @@ class EditCreatedEvent extends Component {
         organizerContact: this.props.reduxState.currentEvent.admin_contact,
     }
 
+    // Function called on Submit button click that will send updated event values to eventsSaga.js
+    // Clears input fields of form
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
         this.props.dispatch({ type: 'EDIT_EVENT', payload: this.state });
         this.setState({
             eventTitle: '',
@@ -25,13 +28,14 @@ class EditCreatedEvent extends Component {
             detailsDescription: '',
             organizerContact: '',
         });
-    }
+    } // End handleSubmit function
 
+    // Function called onChange of an input field in form to capture user inputs and store them in local state
     handleInputChangeFor = propertyName => (event) => {
         this.setState({
             [propertyName]: event.target.value,
         });
-    }
+    } // End handleInputChangeFor function
 
     render() {
         return (
@@ -118,8 +122,9 @@ class EditCreatedEvent extends Component {
             </>
         );
     }
-}
+} // End EditCreatedEvent component
 
+// Provides component access to reduxState through props
 const mapStateToProps = reduxState => ({
     reduxState,
 });

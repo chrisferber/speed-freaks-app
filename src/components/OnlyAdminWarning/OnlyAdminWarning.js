@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// This component is a very basic, unstyled custom message that is rendered if a non admin user knows the url of an admin only view
+// The navigation bar will only conditionally render if the user is an admin, so this component should not be used too frequently
+// Rendered from AdminProtectedRoute
 class OnlyAdminWarning extends Component {
 
   render() {
@@ -14,6 +17,6 @@ class OnlyAdminWarning extends Component {
      </div>
     );
   }
-}
+} // End OnlyAdminWarning component
 
 export default OnlyAdminWarning;

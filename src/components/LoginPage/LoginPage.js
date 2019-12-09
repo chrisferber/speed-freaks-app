@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
+// This component will be rendered if the user is not logged in
+// Allows a user to Log In to the app or Register an account for the app
 class LoginPage extends Component {
   state = {
     username: '',
     password: '',
   };
 
+  // Function that takes the username and password inputed by user and makes dispatch call to loginSaga.js for authentication
+  // Called on Log In button click
   login = (event) => {
     event.preventDefault();
 
@@ -22,8 +26,10 @@ class LoginPage extends Component {
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-  } // end login
+  } // end login function
 
+  // Function that is called onChange of input fields
+  // Captures user inputed username and password and stores data temporarily in local state
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
@@ -33,6 +39,7 @@ class LoginPage extends Component {
   render() {
     return (
       <div>
+        {/* Conditionally renders errors reducer loginMessage, if no errors occur during log in this.props.errors.loginMessage will be falsy */}
         {this.props.errors.loginMessage && (
           <h2
             className="alert"
@@ -77,6 +84,7 @@ class LoginPage extends Component {
           </div>
         </form>
         <center>
+          {/* button to toggle which component renders, LoginPage or RegisterPage by changing reduxState.loginMode reducer */}
           <button
             type="button"
             className="link-button"
@@ -90,9 +98,7 @@ class LoginPage extends Component {
   }
 }
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
+// Provides access of errors reducer in reduxState to component
 const mapStateToProps = state => ({
   errors: state.errors,
 });

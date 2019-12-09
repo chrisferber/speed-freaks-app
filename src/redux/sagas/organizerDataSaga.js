@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// worker Saga: will be fired on 'FETCH_MY_CREATED_EVENTS' actions
 function* fetchMyCreatedEvents() {
     try {
         const response = yield axios.get('/api/organizer');
