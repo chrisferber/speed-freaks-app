@@ -93,7 +93,6 @@ class CreateEvent extends Component {
       <Box m={5}>
         <h1>Create an Event:</h1>
         <div className="createEventForm">
-          <Box component="span" p={2}>
           <TextField
             id="eventTitle"
             label="Event Title"
@@ -102,7 +101,6 @@ class CreateEvent extends Component {
             value={this.state.eventTitle}
             onChange={this.handleInputChangeFor('eventTitle')}
           />
-          </Box>
           <TextField
             id="upcomingDescription"
             label="Upcoming Events Page Description"
