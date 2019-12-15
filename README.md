@@ -1,6 +1,6 @@
 # Speed Freaks
 
-Speed Freaks is a web application designed for use within the high performance driving and racing communities. Through my own involvement it became apparent to me that those seaking to enjoy such racing events needed to scan many different sites as there was no single website to register for events at a particular track. Those organizing these events were also asked to give more time than should be necessary to plan, prepare, and answer questions. This app aims to address those issues by creating a single source on the web for multiple car clubs to create content and handle registration on the same site. Users would also only ever need a single site to check out racing events and register, saving time and possibly increasing awareness for such events.
+Speed Freaks is a web application designed for use within the high performance driving and racing communities. Through my own involvement it became apparent to me that those seeking to enjoy such racing events needed to scan many different sites as there was no single website to register for events at a particular track. Those organizing these events were also asked to give more time than should be necessary to plan, prepare, and answer questions. This app aims to address those issues by creating a single source on the web for multiple car clubs to create content and handle registration on the same site. Users would also only ever need a single site to check out racing events and register, saving time and possibly increasing awareness for such events.
 
 ## Prerequisites
 
