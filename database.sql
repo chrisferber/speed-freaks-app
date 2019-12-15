@@ -10,6 +10,14 @@ CREATE TABLE "user"
     "is_admin" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+CREATE TABLE "vehicle" (
+"id" SERIAL PRIMARY KEY,
+"make" VARCHAR (100) NOT NULL,
+"model" VARCHAR (100) NOT NULL,
+"year" INT NOT NULL,
+"user_id" INT NOT NULL REFERENCES "user"
+);
+
 CREATE TABLE "event"
 (
     "id" SERIAL PRIMARY KEY,
